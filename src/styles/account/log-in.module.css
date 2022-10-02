@@ -1,0 +1,13 @@
+.container { @apply 
+    w-screen
+    h-screen
+    flex
+    justify-center;
+}
+
+.formContainer { @apply
+    max-w-2xl
+    place-self-center
+    bg-red-50
+    p-10;
+}

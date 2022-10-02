@@ -1,0 +1,5 @@
+.headerContainer { @apply
+    flex
+    w-screen
+    bg-purple-300;
+}
