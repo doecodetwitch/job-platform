@@ -1,0 +1,11 @@
+.container { @apply 
+    max-w-[1200px]
+    flex
+    flex-col;
+}
+
+.formContainer { @apply
+    bg-red-50
+    rounded-sm
+    p-4;
+}
