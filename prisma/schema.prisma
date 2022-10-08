@@ -55,6 +55,7 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    pets          Pet[]
 }
 
 model VerificationToken {
@@ -63,4 +64,17 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model Pet {
+    id                String  @id @default(cuid())
+    userId            String
+    type              String
+    breed             String
+    born_at           DateTime
+    image             String?
+    bio               String?
+    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([id])
 }
