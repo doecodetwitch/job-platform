@@ -66,7 +66,7 @@ const Account: NextPage = () => {
 
             <div className={styles.formContainer}>
                 {myPets.data?.map((pet) => (
-                    <div>
+                    <div key={pet.id}>
                         {pet.name}
                     </div>
                 ))}
