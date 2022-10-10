@@ -3,6 +3,7 @@ import { useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { trpc } from "@/src/utils/trpc";
 import Header from '@/src/components/Header/Header';
+import PetBox from '@/src/components/PetBox/PetBox';
 import styles from '@/src/styles/account/index.module.css'
 
 const Account: NextPage = () => {
@@ -65,10 +66,10 @@ const Account: NextPage = () => {
                 </div>
             </div>
 
-            <div className={styles.formContainer}>
+            <div className={styles.myPetsContainer}>
                 {myPets.data?.map((pet) => (
-                    <div key={pet.id}>
-                        {pet.name}
+                    <div key={pet.id} className='col-span-4'>
+                        <PetBox pet={pet} />
                     </div>
                 ))}
             </div>
@@ -84,17 +85,17 @@ const Account: NextPage = () => {
                     <div className="inputContainer">
                         <select placeholder='Type of your pet' {...registerNewPet('type', { required: true })} className='input'>
                             <option value="dog">Dog</option>
-                            <option value="dog">Cat</option>
-                            <option value="dog">Lizard</option>
+                            <option value="cat">Cat</option>
+                            <option value="lizard">Lizard</option>
                         </select>
                         {errorsNewPet.type && <span className='input-error'>This field is required</span>}
                     </div>
                     {/* TODO load available breeds based on chosen pet type */}
                     <div className="inputContainer">
                         <select placeholder='Breed of your pet' {...registerNewPet('breed', { required: true })} className='input'>
-                            <option value="dog">Amstaff</option>
-                            <option value="dog">Husky</option>
-                            <option value="dog">Samoyed</option>
+                            <option value="amstaff">Amstaff</option>
+                            <option value="husky">Husky</option>
+                            <option value="samoyed">Samoyed</option>
                         </select>
                         {errorsNewPet.breed && <span className='input-error'>This field is required</span>}
                     </div>

@@ -9,3 +9,10 @@
     rounded-sm
     p-4;
 }
+
+.myPetsContainer { @apply
+    grid 
+    gap-x-6 
+    gap-y-6
+    grid-cols-12
+}

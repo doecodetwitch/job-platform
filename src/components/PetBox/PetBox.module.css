@@ -1,0 +1,36 @@
+.petBoxContainer { @apply
+    relative 
+    rounded-2xl 
+    bg-white 
+    p-6 
+    shadow-xl 
+    shadow-slate-900/10
+    max-w-md;
+}
+
+.rightNameContainer { @apply
+    p-4
+}
+
+.petBoxImage { @apply
+    rounded-lg
+    border-gray-100
+    w-1/2;
+}
+
+.petName { @apply
+    text-lg
+    text-slate-900;
+}
+
+.petBreed { @apply
+    mt-1 
+    text-sm 
+    text-slate-500;
+}
+
+.bio { @apply
+    text-base
+    font-normal
+    mt-4;
+}
