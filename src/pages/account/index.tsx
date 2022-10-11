@@ -57,7 +57,7 @@ const Account: NextPage = () => {
             breed: data.breed,
             bio: data.bio,
             born_at: data.born_at,
-            image: data.data.petImage[0].name
+            image: data.petImage[0].name
         })
     }
 
