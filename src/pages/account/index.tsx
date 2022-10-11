@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import { useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { trpc } from "@/src/utils/trpc";
+import axios from 'axios';
 import Header from '@/src/components/Header/Header';
 import PetBox from '@/src/components/PetBox/PetBox';
 import styles from '@/src/styles/account/index.module.css'
@@ -10,7 +11,6 @@ const Account: NextPage = () => {
     const { data: session } = useSession({required: true});
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { register: registerNewPet, handleSubmit: handleSubmitNewPet, formState: { errors: errorsNewPet } } = useForm();
-    console.log(session)
 
     const editUsernameMutation = trpc.useMutation('account.updateName', {
         onSuccess: () => {
@@ -21,7 +21,8 @@ const Account: NextPage = () => {
           console.log(`Something went wrong: ${error.message}`)
         },
       })
-
+    
+    //create mutation for adding a pet to the database
     const addPetMutation = trpc.useMutation('account.addPet', {
         onSuccess: () => {
             window.location.reload()
@@ -40,13 +41,23 @@ const Account: NextPage = () => {
         })
     }
 
-    const onCreatePetSubmit = (data: any) => {
+    //on the form submit, use mutation created above
+    const { mutateAsync: getS3FileUploadUrl } = trpc.useMutation('account.getS3UrlPromise');
+    const onCreatePetSubmit = async (data: any) => {
+        const s3FileUploadUrl = await getS3FileUploadUrl({name: data.petImage[0].name, type: data.petImage[0].type});
+        await axios.put(s3FileUploadUrl, data.petImage[0], {
+            headers: {
+                "Content-type": data.petImage[0].type,
+                "Access-Control-Allow-Origin": "*",
+            }
+        });
         addPetMutation.mutate({
             name: data.petName,
             type: data.type,
             breed: data.breed,
             bio: data.bio,
             born_at: data.born_at,
+            image: data.data.petImage[0].name
         })
     }
 
@@ -79,6 +90,10 @@ const Account: NextPage = () => {
                 <form onSubmit={handleSubmitNewPet(onCreatePetSubmit)}>
                     <div className="inputContainer">
                         <input placeholder='Name of your pet' {...registerNewPet('petName', { required: true })} className='input' />
+                        {errorsNewPet.petName && <span className='input-error'>This field is required</span>}
+                    </div>
+                    <div className="inputContainer">
+                        <input type='file' placeholder='Name of your pet' {...registerNewPet('petImage', { required: true })} className='input' />
                         {errorsNewPet.petName && <span className='input-error'>This field is required</span>}
                     </div>
                     {/* TODO load available pet types from db */}
