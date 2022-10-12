@@ -51,6 +51,7 @@ const Account: NextPage = () => {
                 "Access-Control-Allow-Origin": "*",
             }
         });
+
         addPetMutation.mutate({
             name: data.petName,
             type: data.type,
@@ -62,8 +63,9 @@ const Account: NextPage = () => {
     }
 
     return (
+        <>
+        <Header />
         <div className={styles.container}>
-            <Header />
             <div className={styles.formContainer}>
                 <h1>Your data</h1>
                 <div>
@@ -94,7 +96,7 @@ const Account: NextPage = () => {
                     </div>
                     <div className="inputContainer">
                         <input type='file' placeholder='Name of your pet' {...registerNewPet('petImage', { required: true })} className='input' />
-                        {errorsNewPet.petName && <span className='input-error'>This field is required</span>}
+                        {errorsNewPet.petImage && <span className='input-error'>This field is required</span>}
                     </div>
                     {/* TODO load available pet types from db */}
                     <div className="inputContainer">
@@ -126,6 +128,7 @@ const Account: NextPage = () => {
                 </form>
             </div>
         </div>
+        </>
     );
 }
 
