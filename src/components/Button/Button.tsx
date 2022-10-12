@@ -2,7 +2,7 @@ import styles from './Button.module.css';
 
 const Button = (props: any) => {
 
-    var styleClass
+    let styleClass;
 
     if(props.priority === "low"){
         styleClass = styles.lowPriorityButton
