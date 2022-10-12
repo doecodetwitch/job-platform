@@ -2,7 +2,8 @@
     relative
     z-50
     flex
-    justify-between
+    mx-auto
+    xl:w-[1280px]
 }
 
 .navContainer { @apply

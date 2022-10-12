@@ -17,6 +17,7 @@
     active:bg-blue-800
     active:text-blue-100
     focus-visible:outline-blue-600
+    mx-2
 }
 
 .midPriorityButton { @apply
@@ -38,6 +39,7 @@
     active:bg-violet-800
     active:text-violet-100
     focus-visible:outline-violet-600
+    mx-2
 }
 
 .highPriorityButton { @apply
@@ -59,6 +61,7 @@
     active:bg-red-800
     active:text-red-100
     focus-visible:outline-red-600
+    mx-2
 }
 
 .divButton { @apply

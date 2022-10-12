@@ -11,7 +11,7 @@ const Header = () => {
     return (
         <div className={styles.headerContainer}>
             <div className={styles.logoContainer}>
-                <Image src={logo}/>
+                <Image src={logo} alt="dog_logo"/>
             </div>
             <div className={styles.navContainer}>
                 <Link href='/account'>
