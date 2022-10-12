@@ -1,5 +1,31 @@
 .headerContainer { @apply
+    relative
+    z-50
     flex
-    w-screen
-    bg-purple-300;
+    justify-between
+}
+
+.navContainer { @apply
+    inline-block
+    flex
+    items-center
+    flex-auto;
+}
+
+.logoContainer { @apply
+    flex-none
+    w-24
+    h-24
+    mr-4;
+}
+
+.menuContainer { @apply
+    rounded-lg
+    py-1
+    px-2
+    text-sm
+    text-slate-700
+    hover:bg-slate-100
+    hover:text-slate-900
+    mx-2;
 }
