@@ -1,4 +1,5 @@
 import type { NextPage } from 'next';
+import {useEffect, useState} from 'react';
 import { useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { trpc } from "@/src/utils/trpc";
@@ -6,6 +7,10 @@ import axios from 'axios';
 import Header from '@/src/components/Header/Header';
 import PetBox from '@/src/components/PetBox/PetBox';
 import styles from '@/src/styles/account/index.module.css'
+
+import { format } from 'date-fns';
+import { DayPicker } from 'react-day-picker';
+import 'react-day-picker/dist/style.css';
 
 const Account: NextPage = () => {
     const { data: session } = useSession({required: true});
@@ -57,10 +62,17 @@ const Account: NextPage = () => {
             type: data.type,
             breed: data.breed,
             bio: data.bio,
-            born_at: data.born_at,
+            born_at: selectedDay.toISOString(),
             image: data.petImage[0].name
         })
     }
+
+    //presets for the datePicker -> dog's age
+    const today: Date = new Date();
+    const [selectedDay, setSelectedDay] = useState<Date>(today);
+    useEffect(()=>{
+        console.log(selectedDay)
+    }, [selectedDay])
 
     return (
         <>
@@ -121,8 +133,15 @@ const Account: NextPage = () => {
                     </div>
                     {/* TODO inplement a datePicker */}
                     <div className="inputContainer">
-                        <input placeholder="Your pet's date of birth" {...registerNewPet('born_at', { required: true })} className='input' />
-                        {errorsNewPet.born_at && <span className='input-error'>This field is required</span>}
+                        <DayPicker
+                            fromYear={2005}
+                            toYear={2022}
+                            captionLayout="dropdown"
+                            mode="single"
+                            required
+                            selected={selectedDay}
+                            onSelect={setSelectedDay}
+                        />
                     </div>
                     <button type="submit">Add a pet</button>
                 </form>
