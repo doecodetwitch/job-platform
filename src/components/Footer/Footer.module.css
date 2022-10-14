@@ -1,0 +1,25 @@
+.footerContainer { @apply
+    mx-auto 
+    max-w-7xl;
+}
+
+.logoContainer { @apply
+    flex 
+    items-center 
+    justify-center 
+    mb-5 
+    py-5;
+}
+
+.logo { @apply
+    w-24 
+    h-24;
+}
+
+.copyrightContainer { @apply
+    flex 
+    text-slate-500 
+    border-t 
+    border-slate-400/10 
+    py-10;
+}
