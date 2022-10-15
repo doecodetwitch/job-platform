@@ -6,4 +6,9 @@ export const petsRouter = createProtectedRouter().query("getAllPets", {
         const pets = ctx.prisma.pet.findMany();
         return pets;
     }
+}).query("getPetTypes", {
+    async resolve({ctx}){
+        const petTypes = ctx.prisma.petType.findMany();
+        return petTypes;
+    }
 });

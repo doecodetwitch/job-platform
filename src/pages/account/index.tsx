@@ -15,7 +15,7 @@ import 'react-day-picker/dist/style.css';
 const Account: NextPage = () => {
     const { data: session } = useSession({ required: true });
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { register: registerNewPet, handleSubmit: handleSubmitNewPet, formState: { errors: errorsNewPet } } = useForm();
+    const {register: registerNewPet, handleSubmit: handleSubmitNewPet, formState: { errors: errorsNewPet } } = useForm();
 
     const editUsernameMutation = trpc.useMutation('account.updateName', {
         onSuccess: () => {
@@ -39,6 +39,21 @@ const Account: NextPage = () => {
     })
 
     const myPets = trpc.useQuery(['account.getMyPets']);
+    const {data: petTypes} = trpc.useQuery(['pets.getPetTypes']);
+    const [petType, setPetType] = useState('Dog');
+    const [breedList, setBreedList] = useState<string[]>([]);
+
+    useEffect(()=>{
+        const chosenPetType = petTypes?.find(o => o.name === petType);
+        const Arr = chosenPetType?.breeds?.split(',');
+        if(Arr){
+            setBreedList(Arr);
+        }
+    }, [petType, petTypes])
+
+    const onChangePetType = (e: any) => {
+        setPetType(e.target.value);
+    }
 
     const onNameSubmit = (data: any) => {
         editUsernameMutation.mutate({
@@ -90,55 +105,6 @@ const Account: NextPage = () => {
                     </form>
                 </div>
             </div>
-
-            <div className={styles.myPetsContainer}>
-                {myPets.data?.map((pet) => (
-                        <div key={pet.id} className='col-span-4'>
-                            <PetBox pet={pet} />
-                        </div>
-                        ))}
-            </div>
-
-            <div className={styles.formContainer}>
-                <h2>Create a pet profile</h2>
-                <form onSubmit={handleSubmitNewPet(onCreatePetSubmit)}>
-                    <div className="inputContainer">
-                        <input placeholder='Name of your pet' {...registerNewPet('petName', { required: true })} className='input' />
-                        {errorsNewPet.petName && <span className='input-error'>This field is required</span>}
-                    </div>
-                    <div className="inputContainer">
-                        <input type='file' placeholder='Name of your pet' {...registerNewPet('petImage', { required: true })} className='input' />
-                        {errorsNewPet.petImage && <span className='input-error'>This field is required</span>}
-                    </div>
-                    {/* TODO load available pet types from db */}
-                    <div className="inputContainer">
-                        <select placeholder='Type of your pet' {...registerNewPet('type', { required: true })} className='input'>
-                            <option value="dog">Dog</option>
-                            <option value="cat">Cat</option>
-                            <option value="lizard">Lizard</option>
-                        </select>
-                        {errorsNewPet.type && <span className='input-error'>This field is required</span>}
-                    </div>
-                    {/* TODO load available breeds based on chosen pet type */}
-                    <div className="inputContainer">
-                        <select placeholder='Breed of your pet' {...registerNewPet('breed', { required: true })} className='input'>
-                            <option value="amstaff">Amstaff</option>
-                            <option value="husky">Husky</option>
-                            <option value="samoyed">Samoyed</option>
-                        </select>
-                        {errorsNewPet.breed && <span className='input-error'>This field is required</span>}
-                    </div>
-                    <div className="inputContainer">
-                        <textarea placeholder='Bio.. write something about your pet' {...registerNewPet('bio', { required: false })} className='input' />
-                    </div>
-                    {/* TODO inplement a datePicker */}
-                    <div className="inputContainer">
-                        <input placeholder="Your pet's date of birth" {...registerNewPet('born_at', { required: true })} className='input' />
-                        {errorsNewPet.born_at && <span className='input-error'>This field is required</span>}
-                    </div>
-                    <button type="submit">Add a pet</button>
-                </form>
-            </div>
         </div>
 
         <div className={styles.myPetsContainer}>
@@ -162,19 +128,21 @@ const Account: NextPage = () => {
                 </div>
                 {/* TODO load available pet types from db */}
                 <div className="inputContainer">
-                    <select placeholder='Type of your pet' {...registerNewPet('type', { required: true })} className='input'>
-                        <option value="dog">Dog</option>
-                        <option value="cat">Cat</option>
-                        <option value="lizard">Lizard</option>
+                    <select placeholder='Type of your pet' {...registerNewPet("type", { required: true })} className='input' onChange={(e)=>onChangePetType(e)} >
+                        {petTypes?.map((petType)=>(
+                                <option key={petType.name} value={petType.name}>
+                                    {petType.name}
+                                </option>
+                        ))}
                     </select>
                     {errorsNewPet.type && <span className='input-error'>This field is required</span>}
                 </div>
                 {/* TODO load available breeds based on chosen pet type */}
                 <div className="inputContainer">
                     <select placeholder='Breed of your pet' {...registerNewPet('breed', { required: true })} className='input'>
-                        <option value="amstaff">Amstaff</option>
-                        <option value="husky">Husky</option>
-                        <option value="samoyed">Samoyed</option>
+                        {breedList?.map((breed)=>(
+                                <option key={breed} value={breed}>{breed}</option>
+                        ))}
                     </select>
                     {errorsNewPet.breed && <span className='input-error'>This field is required</span>}
                 </div>

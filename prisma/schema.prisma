@@ -79,3 +79,9 @@ model Pet {
 
     @@unique([id])
 }
+
+model PetType {
+    id                String  @id @default(cuid())
+    name              String
+    breeds            String @db.VarChar(5000)
+}
