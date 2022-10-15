@@ -9,7 +9,6 @@ import PetBox from '@/src/components/PetBox/PetBox';
 import styles from '@/src/styles/account/index.module.css'
 import Footer from '@/src/components/Footer/Footer';
 
-import { format } from 'date-fns';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 
@@ -70,7 +69,7 @@ const Account: NextPage = () => {
 
     //presets for the datePicker -> dog's age
     const today: Date = new Date();
-    const [selectedDay, setSelectedDay] = useState<Date>(today);
+    const [selectedDay, setSelectedDay] = useState<any>(today);
     useEffect(()=>{
         console.log(selectedDay)
     }, [selectedDay])
