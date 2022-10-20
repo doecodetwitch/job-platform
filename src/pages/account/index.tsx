@@ -55,7 +55,9 @@ const Account: NextPage = () => {
         setPetType(e.target.value);
     }
 
-    const onNameSubmit = (data: any) => {
+    const onNameSubmit = async (data: any) => {
+        console.log(session.user.id)
+//        const s3FileUploadUrl = await getS3FileUploadUrl({ name: data.petImage[0].name, type: data.petImage[0].type });
         editUsernameMutation.mutate({
             name: data.name
         })
@@ -85,9 +87,6 @@ const Account: NextPage = () => {
     //presets for the datePicker -> dog's age
     const today: Date = new Date();
     const [selectedDay, setSelectedDay] = useState<any>(today);
-    useEffect(()=>{
-        console.log(selectedDay)
-    }, [selectedDay])
 
     return (
         <>
@@ -98,6 +97,8 @@ const Account: NextPage = () => {
                 <div>
                     <form onSubmit={handleSubmit(onNameSubmit)}>
                         <div className="inputContainer">
+                            <input type="file" {...register('userImage', { required: true })} />
+                            {errors.userImage && <span className='input-error'>This field is required</span>}
                             <input placeholder={session?.user?.name || 'your name'} {...register('name', { required: true })} className='input' />
                             {errors.name && <span className='input-error'>This field is required</span>}
                         </div>
