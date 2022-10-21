@@ -22,7 +22,8 @@ const config = {
 export const accountRouter = createProtectedRouter()
   .mutation("updateName", {
     input: z.object({
-        name: z.string().min(1)
+        name: z.string().min(1),
+        image: z.string()
     }),
     async resolve({ ctx, input }) {
       const user = await ctx.prisma.user.update({
@@ -31,6 +32,7 @@ export const accountRouter = createProtectedRouter()
         }, 
         data: {
             name: input.name,
+            image: input.image
         },
       })
 
