@@ -55,10 +55,21 @@ const Account: NextPage = () => {
         setPetType(e.target.value);
     }
 
-    const onNameSubmit = (data: any) => {
-        editUsernameMutation.mutate({
-            name: data.name
-        })
+    const onNameSubmit = async (data: any) => {
+        const userImageName = session?.user?.id + data.userImage[0].name;
+        const s3FileUploadUrl = await getS3FileUploadUrl({ name: userImageName, type: data.userImage[0].type });
+        
+        await axios.put(s3FileUploadUrl, data.userImage[0], {
+            headers: {
+                "Content-type": data.userImage[0].type,
+                "Access-Control-Allow-Origin": "*",
+            }
+        }).then(() => {
+            editUsernameMutation.mutate({
+                name: data.name,
+                image: process.env.NEXT_PUBLIC_S3_BUCKET_URL + userImageName
+            })
+        });
     }
 
     //on the form submit, use mutation created above
@@ -70,24 +81,21 @@ const Account: NextPage = () => {
                 "Content-type": data.petImage[0].type,
                 "Access-Control-Allow-Origin": "*",
             }
+        }).then(() => {
+            addPetMutation.mutate({
+                name: data.petName,
+                type: data.type,
+                breed: data.breed,
+                bio: data.bio,
+                born_at: selectedDay.toISOString(),
+                image: data.petImage[0].name
+            })
         });
-
-        addPetMutation.mutate({
-            name: data.petName,
-            type: data.type,
-            breed: data.breed,
-            bio: data.bio,
-            born_at: selectedDay.toISOString(),
-            image: data.petImage[0].name
-        })
     }
 
     //presets for the datePicker -> dog's age
     const today: Date = new Date();
     const [selectedDay, setSelectedDay] = useState<any>(today);
-    useEffect(()=>{
-        console.log(selectedDay)
-    }, [selectedDay])
 
     return (
         <>
@@ -98,6 +106,14 @@ const Account: NextPage = () => {
                 <div>
                     <form onSubmit={handleSubmit(onNameSubmit)}>
                         <div className="inputContainer">
+                            <label htmlFor="userImage" className='p-4 flex justify-center relative'>
+                                <div className='flex w-36 h-36 relative'>
+                                    {session?.user?.image ? 
+                                    <img src={session?.user?.image} className="cursor-pointer rounded-full w-36 h-36 z-10" alt="" /> : null}
+                                    <input id="userImage" className="hidden" type="file" {...register('userImage', { required: true })} />
+                                    {errors.userImage && <span className='input-error'>This field is required</span>}
+                                </div>
+                            </label>
                             <input placeholder={session?.user?.name || 'your name'} {...register('name', { required: true })} className='input' />
                             {errors.name && <span className='input-error'>This field is required</span>}
                         </div>
