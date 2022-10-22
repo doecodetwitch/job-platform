@@ -20,6 +20,9 @@ const Header = () => {
                 <Link href='/pets'>
                     <a className={styles.menuContainer}>Dogs</a>
                 </Link>
+                <Link href='/jobs'>
+                    <a className={styles.menuContainer}>Jobs</a>
+                </Link>
                 <Link href='/account'>
                     <a className={styles.menuContainer}>Dog-lovers</a>
                 </Link>
