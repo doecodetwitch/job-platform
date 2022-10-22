@@ -89,4 +89,29 @@ export const accountRouter = createProtectedRouter()
 
       return url;
     }
+  }).mutation("postJob", {
+    input: z.object({
+        petId: z.string(),
+        title: z.string(),
+        description: z.string(),
+        price: z.number(),
+        contactEmail: z.string(),
+        contactNumber: z.string(),
+    }),
+    async resolve({ ctx, input }) {
+      const job = await ctx.prisma.job.create({
+        data: {
+            petId: input.petId,
+            userId: ctx.session.user.id,
+            title: input.title,
+            description: input.description,
+            price: input.price,
+            contactEmail: input.contactEmail,
+            contactNumber: input.contactNumber,
+            status: 'active'
+        }
+      });
+
+      return job;
+    },
   });

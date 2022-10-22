@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { trpc } from "@/src/utils/trpc";
@@ -8,6 +8,7 @@ import Header from '@/src/components/Header/Header';
 import PetBox from '@/src/components/PetBox/PetBox';
 import styles from '@/src/styles/account/index.module.css'
 import Footer from '@/src/components/Footer/Footer';
+import JobForm from '@/src/components/Account/JobForm/JobForm';
 
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
@@ -179,6 +180,10 @@ const Account: NextPage = () => {
                 </div>
                 <button type="submit">Add a pet</button>
             </form>
+        </div>
+
+        <div>
+            <JobForm myPets={myPets} />
         </div>
 
     <Footer />
