@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { trpc } from "@/src/utils/trpc";
@@ -9,6 +9,7 @@ import PetBox from '@/src/components/PetBox/PetBox';
 import styles from '@/src/styles/account/index.module.css'
 import Footer from '@/src/components/Footer/Footer';
 import JobForm from '@/src/components/Account/JobForm/JobForm';
+import Button from '@/src/components/Button/Button';
 
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
@@ -17,6 +18,21 @@ const Account: NextPage = () => {
     const { data: session } = useSession({ required: true });
     const { register, handleSubmit, formState: { errors } } = useForm();
     const {register: registerNewPet, handleSubmit: handleSubmitNewPet, formState: { errors: errorsNewPet } } = useForm();
+    const jobFormRef = useRef<HTMLDivElement>(null);
+
+    const handleOpenJobForm = () => {
+        if(jobFormRef.current){
+            jobFormRef.current.classList.remove('hidden')
+            jobFormRef.current.classList.add('flex')
+        }
+    }
+
+    const handleCloseJobForm = () => {
+        if(jobFormRef.current){
+            jobFormRef.current.classList.remove('flex')
+            jobFormRef.current.classList.add('hidden')
+        }
+    }
 
     const editUsernameMutation = trpc.useMutation('account.updateName', {
         onSuccess: () => {
@@ -183,7 +199,11 @@ const Account: NextPage = () => {
         </div>
 
         <div>
-            <JobForm myPets={myPets} />
+            <Button onClick={()=>{handleOpenJobForm()}} priority="low">Add a new job</Button>
+            <div ref={jobFormRef} className='hidden fixed top-0 left-0 w-full h-full bg-white bg-opacity-50 place-items-center place-content-center'>
+                <div className='relative r-0'>Close</div>
+                <JobForm myPets={myPets} closeJobForm={handleCloseJobForm} />
+            </div>
         </div>
 
     <Footer />
