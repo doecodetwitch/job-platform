@@ -28,8 +28,12 @@ const JobForm = (props: any) => {
     }
 
     return (
-            <div className = ''>
-                <form onSubmit={handleSubmit(onSubmit)}>
+            <div className='min-w-[400px] bg-white p-6'>
+                <span className='flex items-center mb-4 space-x-full'>
+                    <h3 className='grow'>Fill out the form to post a job!</h3>
+                    <Button onClick={()=>{props.closeJobForm()}} priority='high'>Close</Button>
+                </span>
+                <form onSubmit={handleSubmit(onSubmit)} className='space-y-2'>
                     <select placeholder='Your pet' {...register("petId", { required: true })} className='input'>
                         {props.myPets?.data?.map((pet:any)=>(
                             <option key={pet.id} value={pet.id}>
@@ -45,7 +49,7 @@ const JobForm = (props: any) => {
                     {errors.price && <span className='input-error'>This field is required</span>}
                     <input className='input' placeholder='Your email' {...register('contactEmail', { required: false })} />
                     <input className='input' placeholder='Your phone number' {...register('contactNumber', { required: false })} />
-                    <Button priority='high'>Post a job</Button>
+                    <Button priority='mid'>Post a job</Button>
                 </form>
             </div>
     );
