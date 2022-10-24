@@ -1,5 +1,4 @@
 .container { @apply 
-    max-w-[1200px]
     flex
     flex-col;
 }

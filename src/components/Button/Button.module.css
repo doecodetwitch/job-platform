@@ -1,3 +1,20 @@
+.lowerPriorityButton { @apply
+    inline-flex
+    items-center
+    justify-center
+    rounded-md
+    py-1
+    px-2
+    text-xs
+    font-light
+    focus:outline-none
+    focus-visible:outline-2
+    focus-visible:outline-offset-2
+    bg-white
+    text-brand-black
+    hover:bg-gray-50
+}
+
 .lowPriorityButton { @apply
     inline-flex
     items-center
