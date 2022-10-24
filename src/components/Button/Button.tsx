@@ -4,7 +4,10 @@ const Button = (props: any) => {
 
     let styleClass;
 
-    if(props.priority === "low"){
+    if(props.priority === "lower"){
+        styleClass = styles.lowerPriorityButton
+    }
+    else if(props.priority === "low"){
         styleClass = styles.lowPriorityButton
     }
     else if (props.priority === "mid"){

@@ -10,6 +10,7 @@ import styles from '@/src/styles/account/index.module.css'
 import Footer from '@/src/components/Footer/Footer';
 import JobForm from '@/src/components/Account/JobForm/JobForm';
 import Button from '@/src/components/Button/Button';
+import JobListItem from '@/src/components/Job/JobListItem';
 
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
@@ -55,6 +56,7 @@ const Account: NextPage = () => {
         },
     })
 
+    const myJobs = trpc.useQuery(['account.getMyJobs']);
     const myPets = trpc.useQuery(['account.getMyPets']);
     const {data: petTypes} = trpc.useQuery(['pets.getPetTypes']);
     const [petType, setPetType] = useState('Dog');
@@ -115,7 +117,7 @@ const Account: NextPage = () => {
     const [selectedDay, setSelectedDay] = useState<any>(today);
 
     return (
-        <>
+        <div className='layout'>
         <Header />
         <div className={styles.container}>
             <div className={styles.formContainer}>
@@ -199,6 +201,9 @@ const Account: NextPage = () => {
         </div>
 
         <div>
+            {myJobs.data?.map((item)=>(
+                <JobListItem job={item} key={item.id} />
+            ))}
             <Button onClick={()=>{handleOpenJobForm()}} priority="low">Add a new job</Button>
             <div ref={jobFormRef} className='hidden fixed top-0 left-0 w-full h-full bg-white bg-opacity-50 place-items-center place-content-center'>
                 <div className='relative r-0'>Close</div>
@@ -207,7 +212,7 @@ const Account: NextPage = () => {
         </div>
 
     <Footer />
-    </>
+    </div>
     );
 }
 

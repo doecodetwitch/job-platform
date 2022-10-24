@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import { trpc } from "@/src/utils/trpc";
 import Header from '@/src/components/Header/Header';
 import Footer from '@/src/components/Footer/Footer';
+import JobListItem from '@/src/components/Job/JobListItem';
 
 const Jobs: NextPage = () => {
 
@@ -18,12 +19,9 @@ const Jobs: NextPage = () => {
     return (
         <>
             <Header />
-            <div className='grid gap-x-6 gap-y-6 grid-cols-12'>
+            <div className='layout'>
                 {jobs.data?.map((item) => (
-                    <div key={item.id} className='col-span-12 p-4'>
-                        <p className='my-4 font-medium'>{item.title} | {item.price}</p>
-                        <p>{item.description}</p>
-                    </div>
+                    <JobListItem job={item} key={item.id} />
                 ))}
             </div>
             <Footer />
