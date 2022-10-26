@@ -4,7 +4,10 @@ const PetBox = (props: any) => {
     return (
         <div className={styles.petBoxContainer}>
             <div className='flex'>
-                <img src="https://i.pinimg.com/564x/2c/e9/31/2ce931c901ba679c2a855bfd77e6da5f.jpg" alt="pet-image" className={styles.petBoxImage} />
+                {props.pet.image ?
+                <img src={process.env.NEXT_PUBLIC_S3_BUCKET_URL + props.pet.image} className={styles.petBoxImage} /> :
+                <img src="https://i.pinimg.com/564x/2c/e9/31/2ce931c901ba679c2a855bfd77e6da5f.jpg" alt="pet-image" className={styles.petBoxImage} /> }
+
                 <div className={styles.rightNameContainer}>
                     <p className={styles.petName}>{props.pet.name}</p>
                     <p className={styles.petBreed}>{props.pet.breed}</p>

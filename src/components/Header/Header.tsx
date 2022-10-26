@@ -1,30 +1,43 @@
 import { useSession, signIn, signOut } from "next-auth/react";
 import Link from 'next/link';
 import styles from './Header.module.css';
+import Image from "next/image";
+import logo from "@/src/assets/dog_logo.svg";
+import Button from "@/src/components/Button/Button";
 
 const Header = () => {
     const {data: session} = useSession();
 
     return (
         <div className={styles.headerContainer}>
-            <div>
-                Logo
+            <div className={styles.logoContainer}>
+                <Image src={logo} alt="dog_logo"/>
             </div>
-            <div>
-                <Link href='/pets'>
-                    <a>Pets</a>
+            <div className={styles.navContainer}>
+                <Link href='/account'>
+                    <a className={styles.menuContainer}>Home</a>
                 </Link>
-                <Link href='/dog-lovers'>
-                    <a>Pet-lovers</a>
+                <Link href='/pets'>
+                    <a className={styles.menuContainer}>Dogs</a>
+                </Link>
+                <Link href='/jobs'>
+                    <a className={styles.menuContainer}>Jobs</a>
                 </Link>
                 <Link href='/account'>
-                    <a>Account</a>
+                    <a className={styles.menuContainer}>Dog-lovers</a>
                 </Link>
             </div>
-            <div>
-                {session ? 
-                <button onClick={()=>signOut()}>Log out</button> :
-                <button onClick={()=>signIn()}>Log in</button>
+            <div className="flex">
+
+                {session ?
+                <Button
+                    onClick={()=>signOut()}
+                    priority="low"
+                >Log Out</Button> :
+                <Button
+                    onClick={()=>signIn()}
+                    priority="low"
+                >Log In</Button>
                 }
             </div>
         </div>
