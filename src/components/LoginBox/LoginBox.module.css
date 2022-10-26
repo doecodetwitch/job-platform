@@ -24,8 +24,20 @@
     text-7xl
     uppercase
     -mt-16
+    font-bold
 }
 
 .loginBoxWidth {
     width: 480px;
+}
+
+.callToAction { @apply
+    mt-4
+    text-center
+}
+
+.identityProviderIcon { @apply
+    invert
+    mr-2
+    mt-1
 }
