@@ -1,0 +1,31 @@
+.loginBoxWraper { @apply
+   border-solid
+   border-2
+   border-slate-200
+   rounded-xl
+   drop-shadow-2xl
+   p-6
+   loginBoxWidth
+}
+
+.loginBoxButtons { @apply
+    mt-12
+    flex-1
+    items-center
+}
+
+.loginButton { @apply
+    my-4
+    w-full
+}
+
+.logoName { @apply
+    text-center
+    text-7xl
+    uppercase
+    -mt-16
+}
+
+.loginBoxWidth {
+    width: 480px;
+}

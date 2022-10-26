@@ -87,3 +87,27 @@
     gap-x-5
     md:gap-x-8
 }
+
+.buttonFill { @apply
+    w-full
+}
+
+.buttonSmall { @apply
+    p-1
+    text-sm
+}
+
+.buttonMedium { @apply
+    p-2
+    text-base
+}
+
+.buttonLarge { @apply
+    p-4
+    text-2xl
+}
+
+.buttonXl{ @apply
+    p-6
+    text-4xl
+}

@@ -22,10 +22,12 @@ export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
+      id: "google",
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
     }),
     DiscordProvider({
+      id: "discord",
       clientId: env.DISCORD_CLIENT_ID,
       clientSecret: env.DISCORD_CLIENT_SECRET,
     }),
@@ -63,7 +65,10 @@ export const authOptions: NextAuthOptions = {
     //   }
     // })
     // ...add more providers here
-  ]
+  ],
+  pages: {
+    signIn: '/auth/signin',
+  }
 };
 
 export default NextAuth(authOptions);

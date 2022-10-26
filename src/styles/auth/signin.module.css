@@ -1,0 +1,9 @@
+.signinPage { @apply
+    h-screen
+    w-screen
+    flex
+    justify-items-center
+    justify-center
+    items-center
+    content-center
+}
