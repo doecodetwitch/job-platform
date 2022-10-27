@@ -28,7 +28,7 @@ const LoginBox = ({providers}: LoginBoxProps) => {
                 </div>
                 <div className={styles.loginBoxButtons}>
                     {Object.values(providers).map((provider) => (
-                        <div className={styles.loginButton}>
+                        <div className={styles.loginButton} key={provider.id}>
                             <Button size='large' fill='true' priority='mid' onClick={() => signIn(provider.id, { callbackUrl: '/pets' })}>
                                 <img src={provider.id === 'google' ? googleIcon.src : discordIcon.src } className={styles.identityProviderIcon} alt="Identity provider" width='32' />
                                 Sign in with {provider.name}

@@ -2,8 +2,8 @@ import styles from './Button.module.css';
 
 const Button = (props: any) => {
 
-    let buttonClasses = [];
-    let wrapperClasses = [styles.divButton];
+    const buttonClasses = [];
+    const wrapperClasses = [styles.divButton];
 
     if(props.priority === "lower"){
         buttonClasses.push(styles.lowerPriorityButton)
