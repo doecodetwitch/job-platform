@@ -24,8 +24,8 @@ const Title = () => {
                     <a className={styles.button} href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Watch video</a>
                 </div>
                 <div className={styles.imagesDiv}>
-                    {dogImage.map((item) => (
-                        <img className={styles.image} src={item} />
+                    {dogImage.map((item, index) => (
+                        <img className={styles.image} src={item} key={index} />
                     ))}
                 </div>
             </div>
