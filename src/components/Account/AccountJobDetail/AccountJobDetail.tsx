@@ -2,12 +2,22 @@ import { useForm } from 'react-hook-form';
 import { trpc } from "@/src/utils/trpc";
 import Button from '@/src/components/Button/Button';
 
-const JobForm = (props: any) => {
+const AccountJobDetail = (props: any) => {
     const { register, handleSubmit, formState: { errors } } = useForm({
-        defaultValues: props.initialValues
+        defaultValues: props.job
     });
 
-    const postJobMutation = trpc.useMutation('account.postJob', {
+    const editJobMutation = trpc.useMutation('account.editJob', {
+        onSuccess: () => {
+            window.location.reload()
+            console.log('success')
+        },
+        onError: (error) => {
+            console.log(`Something went wrong: ${error.message}`)
+        },
+    })
+
+    const deleteJobMutation = trpc.useMutation('account.deleteJob', {
         onSuccess: () => {
             window.location.reload()
             console.log('success')
@@ -18,8 +28,8 @@ const JobForm = (props: any) => {
     })
 
     const onSubmit = (data: any) => {
-        postJobMutation.mutate({
-            petId: data.petId,
+        editJobMutation.mutate({
+            id: props.job.id,
             title: data.title,
             description: data.description,
             price: parseFloat(data.price),
@@ -31,29 +41,27 @@ const JobForm = (props: any) => {
     return (
             <div className='min-w-[400px] bg-white p-6'>
                 <span className='flex items-center mb-4 space-x-full'>
-                    <h3 className='grow'>Fill out the form to post a job!</h3>
-                    <Button onClick={()=>{props.closeJobForm()}} priority='high'>Close</Button>
+                    <h3 className='grow'>Edit this job</h3>
+                    <Button onClick={()=>{props.closeEdit()}} priority='high'>Close</Button>
                 </span>
                 <form onSubmit={handleSubmit(onSubmit)} className='space-y-2'>
-                    <select placeholder='Your pet' {...register("petId", { required: true })} className='input'>
-                        {props.myPets?.data?.map((pet:any)=>(
-                            <option key={pet.id} value={pet.id}>
-                                {pet.name}
-                            </option>
-                        ))}
-                    </select>
                     <input className='input' placeholder='Title' {...register('title', { required: true })} />
                     {errors.title && <span className='input-error'>This field is required</span>}
-                    <textarea className='input' placeholder='Description' {...register('description', { required: true })} />
+                    <textarea className='input' placeholder='Description' {...register('description', { required: false })} />
                     {errors.description && <span className='input-error'>This field is required</span>}
-                    <input className='input' placeholder='Price $$$' {...register('price', { required: true })} />
+                    <input className='input' placeholder='Price $$$' {...register('price', { required: false })} />
                     {errors.price && <span className='input-error'>This field is required</span>}
                     <input className='input' placeholder='Your email' {...register('contactEmail', { required: false })} />
                     <input className='input' placeholder='Your phone number' {...register('contactNumber', { required: false })} />
-                    <Button priority='mid'>Post a job</Button>
+                    <Button priority='mid'>Confirm</Button>
                 </form>
+
+                <div className='border-t-2 mt-6 pt-4 w-full flex items-center'>
+                    <p>Delete the job</p>
+                    <Button priority='high' onClick={()=>(deleteJobMutation.mutate({id: props.job.id}))}>Delete</Button>
+                </div>
             </div>
     );
 }
 
-export default JobForm;
+export default AccountJobDetail;

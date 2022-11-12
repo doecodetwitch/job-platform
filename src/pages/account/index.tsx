@@ -22,14 +22,14 @@ const Account: NextPage = () => {
     const jobFormRef = useRef<HTMLDivElement>(null);
 
     const handleOpenJobForm = () => {
-        if(jobFormRef.current){
+        if (jobFormRef.current) {
             jobFormRef.current.classList.remove('hidden')
             jobFormRef.current.classList.add('flex')
         }
     }
 
     const handleCloseJobForm = () => {
-        if(jobFormRef.current){
+        if (jobFormRef.current) {
             jobFormRef.current.classList.remove('flex')
             jobFormRef.current.classList.add('hidden')
         }
@@ -56,9 +56,9 @@ const Account: NextPage = () => {
         },
     })
 
-    const myJobs = trpc.useQuery(['account.getMyJobs']);
+    const { data: myJobs } = trpc.useQuery(['account.getMyJobs']);
     const myPets = trpc.useQuery(['account.getMyPets']);
-    const {data: petTypes} = trpc.useQuery(['pets.getPetTypes']);
+    const { data: petTypes } = trpc.useQuery(['pets.getPetTypes']);
     const [petType, setPetType] = useState('Dog');
     const [breedList, setBreedList] = useState<string[]>([]);
 
@@ -172,7 +172,6 @@ const Account: NextPage = () => {
                     </select>
                     {errorsNewPet.type && <span className='input-error'>This field is required</span>}
                 </div>
-                {/* TODO load available breeds based on chosen pet type */}
                 <div className="inputContainer">
                     <select placeholder='Breed of your pet' {...registerNewPet('breed', { required: true })} className='input'>
                         {breedList?.map((breed)=>(
@@ -184,7 +183,6 @@ const Account: NextPage = () => {
                 <div className="inputContainer">
                     <textarea placeholder='Bio.. write something about your pet' {...registerNewPet('bio', { required: false })} className='input' />
                 </div>
-                {/* TODO inplement a datePicker */}
                 <div className="inputContainer">
                     <DayPicker
                         fromYear={2005}
@@ -201,8 +199,8 @@ const Account: NextPage = () => {
         </div>
 
         <div>
-            {myJobs.data?.map((item)=>(
-                <JobListItem job={item} key={item.id} />
+            {myJobs?.map((item)=>(
+                <JobListItem job={item} key={item.id} mode='myAccount' />
             ))}
             <Button onClick={()=>{handleOpenJobForm()}} priority="low">Add a new job</Button>
             <div ref={jobFormRef} className='hidden fixed top-0 left-0 w-full h-full bg-white bg-opacity-50 place-items-center place-content-center'>
@@ -210,7 +208,6 @@ const Account: NextPage = () => {
                 <JobForm myPets={myPets} closeJobForm={handleCloseJobForm} />
             </div>
         </div>
-
     <Footer />
     </div>
     );
