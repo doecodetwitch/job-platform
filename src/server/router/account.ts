@@ -2,6 +2,7 @@ import { createProtectedRouter } from "./context";
 import z from 'zod';
 import { resolve } from "path";
 import S3 from 'aws-sdk/clients/s3';
+import { TRPCError } from '@trpc/server';
 
 const s3 = new S3({
   region: 'eu-central-1',
@@ -114,7 +115,81 @@ export const accountRouter = createProtectedRouter()
 
       return job;
     },
-  }).query("getMyJobs", {
+  }).mutation("editJob", {
+    input: z.object({
+      id: z.string(),
+      title: z.string(),
+      description: z.string(),
+      price: z.number(),
+      contactEmail: z.string(),
+      contactNumber: z.string(),
+    }),
+    async resolve({ ctx, input }) {
+      ctx.prisma.job.findUnique({
+        where: {
+          id: input.id
+        }
+      }).then(async (data)=>{
+        if (data?.userId === ctx.session.user.id) {
+          const job = await ctx.prisma.job.update({
+            where: {
+              id: input.id,
+            },
+            data: {
+              title: input.title,
+              description: input.description,
+              price: input.price,
+              contactEmail: input.contactEmail,
+              contactNumber: input.contactNumber,
+            }
+          });
+
+          return job;
+        } else {
+          throw new TRPCError({
+            code: 'UNAUTHORIZED',
+            message: 'The user is not authorized to modify this job.',
+          });
+        }
+      }).catch(() => {
+        throw new TRPCError({
+            code: 'NOT_FOUND',
+            message: 'This job does not exist.',
+          });
+      });
+    },
+  }).mutation("deleteJob", {
+      input: z.object({
+        id: z.string(),
+      }),
+      async resolve({ ctx, input }) {
+        ctx.prisma.job.findUnique({
+          where: {
+            id: input.id
+          }
+        }).then(async (data)=>{
+          if (data?.userId === ctx.session.user.id) {
+            const job = await ctx.prisma.job.delete({
+              where: {
+                id: input.id,
+              }
+            });
+
+            return job;
+          } else {
+            throw new TRPCError({
+              code: 'UNAUTHORIZED',
+              message: 'The user is not authorized to modify this job.',
+            });
+          }
+        }).catch(() => {
+          throw new TRPCError({
+            code: 'NOT_FOUND',
+            message: 'This job does not exist.',
+          });
+        });
+      },
+    }).query("getMyJobs", {
     async resolve({ ctx }) {
       const jobs = await ctx.prisma.job.findMany({
         where: {
