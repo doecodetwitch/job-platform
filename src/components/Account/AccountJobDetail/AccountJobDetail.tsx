@@ -1,11 +1,18 @@
 import { useForm } from 'react-hook-form';
 import { trpc } from "@/src/utils/trpc";
 import Button from '@/src/components/Button/Button';
+import Switch from "@/src/components/Switch/Switch";
+import React, {useState} from "react";
 
 const AccountJobDetail = (props: any) => {
     const { register, handleSubmit, formState: { errors } } = useForm({
         defaultValues: props.job
     });
+
+    const [jobActive, setJobActive] = useState(props.job.status === 'active');
+
+    const handleChangeJobStatus = () => (setJobActive(!jobActive));
+    console.log(jobActive)
 
     const editJobMutation = trpc.useMutation('account.editJob', {
         onSuccess: () => {
@@ -35,6 +42,7 @@ const AccountJobDetail = (props: any) => {
             price: parseFloat(data.price),
             contactEmail: data.contactEmail,
             contactNumber: data.contactNumber,
+            status: jobActive ? 'active' : 'not_active'
         })
     }
 
@@ -53,6 +61,10 @@ const AccountJobDetail = (props: any) => {
                     {errors.price && <span className='input-error'>This field is required</span>}
                     <input className='input' placeholder='Your email' {...register('contactEmail', { required: false })} />
                     <input className='input' placeholder='Your phone number' {...register('contactNumber', { required: false })} />
+                    <div className='py-2 flex items-center'>
+                        <p className='mr-2'>Enable / disable </p>
+                        <Switch toggled={!jobActive} action={handleChangeJobStatus} />
+                    </div>
                     <Button priority='mid'>Confirm</Button>
                 </form>
 
