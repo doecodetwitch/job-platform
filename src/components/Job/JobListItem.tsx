@@ -16,14 +16,16 @@ const JobListItem = ({job, mode}: any) => {
                     <p className='my-4'>{job.title}</p>
                     <p className="text-xs">{job.description}</p>
                     <div className='flex items-center mt-6 justify-end'>
-                        <div className='grow flex space-x-2'>
+                        <div className='grow flex space-x-2 items-center'>
                             <Button priority='lower'>
                                 See more
                             </Button>
                             {mode === 'myAccount' &&
-                                <Button priority='lower' onClick={() => (setEditMode(true))}>
-                                    Edit
-                                </Button>
+                                <>
+                                    <Button priority='lower' onClick={() => (setEditMode(true))}>
+                                        Edit
+                                    </Button>
+                                </>
                             }
                         </div>
                         <img src={price_tag.src} alt="Price" width='30' />

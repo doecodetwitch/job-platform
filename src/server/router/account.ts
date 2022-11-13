@@ -123,6 +123,7 @@ export const accountRouter = createProtectedRouter()
       price: z.number(),
       contactEmail: z.string(),
       contactNumber: z.string(),
+      status: z.string()
     }),
     async resolve({ ctx, input }) {
       ctx.prisma.job.findUnique({
@@ -141,6 +142,7 @@ export const accountRouter = createProtectedRouter()
               price: input.price,
               contactEmail: input.contactEmail,
               contactNumber: input.contactNumber,
+              status: input.status
             }
           });
 
