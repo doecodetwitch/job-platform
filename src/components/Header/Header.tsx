@@ -14,7 +14,7 @@ const Header = () => {
                 <Image src={logo} alt="dog_logo"/>
             </div>
             <div className={styles.navContainer}>
-                <Link href='/account'>
+                <Link href='/'>
                     <a className={styles.menuContainer}>Home</a>
                 </Link>
                 <Link href='/pets'>
