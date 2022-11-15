@@ -12,7 +12,6 @@ const AccountJobDetail = (props: any) => {
     const [jobActive, setJobActive] = useState(props.job.status === 'active');
 
     const handleChangeJobStatus = () => (setJobActive(!jobActive));
-    console.log(jobActive)
 
     const editJobMutation = trpc.useMutation('account.editJob', {
         onSuccess: () => {
