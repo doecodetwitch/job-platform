@@ -43,7 +43,7 @@ export default function FeaturesContent() {
                                 </div>
                             </h3>
                             <p className={styles.contentText}>
-                              Keep track of everyone's salaries and whether or not they've been paid. Direct deposit not supported.
+                              Keep track of everyone&apos;s salaries and whether or not they&apos;ve been paid. Direct deposit not supported.
                             </p>
                         </button>
                         <button onClick={()=>handleChangeSection(2)} className={selectedSection===2?styles.activeSection:styles.inactiveSection}>
@@ -55,7 +55,7 @@ export default function FeaturesContent() {
                                 </div>
                             </h3>
                             <p className={styles.contentText}>
-                              All of your receipts organized into one place, as long as you don't mind typing in the data by hand.
+                              All of your receipts organized into one place, as long as you don&apos;t mind typing in the data by hand.
                             </p>
                         </button>
                     </div>
@@ -63,14 +63,14 @@ export default function FeaturesContent() {
                 <div className={selectedSection === 1 ? styles.activeSectionMobileTextContainer : styles.inactiveSectionMobileTextContainer}>
                   <div className={styles.mobileTitleContainer}>
                     <p className={styles.mobileContentText}>
-                      Keep track of everyone's salaries and whether or not they've been paid. Direct deposit not supported.
+                      Keep track of everyone&apos;s salaries and whether or not they&apos;ve been paid. Direct deposit not supported.
                     </p>
                   </div>
                 </div>
                 <div className={selectedSection === 2 ? styles.activeSectionMobileTextContainer : styles.inactiveSectionMobileTextContainer}>
                   <div className={styles.mobileTitleContainer}>
                     <p className={styles.mobileContentText}>
-                      All of your receipts organized into one place, as long as you don't mind typing in the data by hand.
+                      All of your receipts organized into one place, as long as you don&apos;t mind typing in the data by hand.
                     </p>
                   </div>
                 </div>
