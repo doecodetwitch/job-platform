@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import {useEffect, useState} from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { trpc } from "@/src/utils/trpc";
@@ -8,6 +8,9 @@ import Header from '@/src/components/Header/Header';
 import PetBox from '@/src/components/PetBox/PetBox';
 import styles from '@/src/styles/account/index.module.css'
 import Footer from '@/src/components/Footer/Footer';
+import JobForm from '@/src/components/Account/JobForm/JobForm';
+import Button from '@/src/components/Button/Button';
+import JobListItem from '@/src/components/Job/JobListItem';
 
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
@@ -16,6 +19,21 @@ const Account: NextPage = () => {
     const { data: session } = useSession({ required: true });
     const { register, handleSubmit, formState: { errors } } = useForm();
     const {register: registerNewPet, handleSubmit: handleSubmitNewPet, formState: { errors: errorsNewPet } } = useForm();
+    const jobFormRef = useRef<HTMLDivElement>(null);
+
+    const handleOpenJobForm = () => {
+        if (jobFormRef.current) {
+            jobFormRef.current.classList.remove('hidden')
+            jobFormRef.current.classList.add('flex')
+        }
+    }
+
+    const handleCloseJobForm = () => {
+        if (jobFormRef.current) {
+            jobFormRef.current.classList.remove('flex')
+            jobFormRef.current.classList.add('hidden')
+        }
+    }
 
     const editUsernameMutation = trpc.useMutation('account.updateName', {
         onSuccess: () => {
@@ -38,8 +56,9 @@ const Account: NextPage = () => {
         },
     })
 
+    const { data: myJobs } = trpc.useQuery(['account.getMyJobs']);
     const myPets = trpc.useQuery(['account.getMyPets']);
-    const {data: petTypes} = trpc.useQuery(['pets.getPetTypes']);
+    const { data: petTypes } = trpc.useQuery(['pets.getPetTypes']);
     const [petType, setPetType] = useState('Dog');
     const [breedList, setBreedList] = useState<string[]>([]);
 
@@ -55,10 +74,21 @@ const Account: NextPage = () => {
         setPetType(e.target.value);
     }
 
-    const onNameSubmit = (data: any) => {
-        editUsernameMutation.mutate({
-            name: data.name
-        })
+    const onNameSubmit = async (data: any) => {
+        const userImageName = session?.user?.id + data.userImage[0].name;
+        const s3FileUploadUrl = await getS3FileUploadUrl({ name: userImageName, type: data.userImage[0].type });
+        
+        await axios.put(s3FileUploadUrl, data.userImage[0], {
+            headers: {
+                "Content-type": data.userImage[0].type,
+                "Access-Control-Allow-Origin": "*",
+            }
+        }).then(() => {
+            editUsernameMutation.mutate({
+                name: data.name,
+                image: process.env.NEXT_PUBLIC_S3_BUCKET_URL + userImageName
+            })
+        });
     }
 
     //on the form submit, use mutation created above
@@ -70,27 +100,24 @@ const Account: NextPage = () => {
                 "Content-type": data.petImage[0].type,
                 "Access-Control-Allow-Origin": "*",
             }
+        }).then(() => {
+            addPetMutation.mutate({
+                name: data.petName,
+                type: data.type,
+                breed: data.breed,
+                bio: data.bio,
+                born_at: selectedDay.toISOString(),
+                image: data.petImage[0].name
+            })
         });
-
-        addPetMutation.mutate({
-            name: data.petName,
-            type: data.type,
-            breed: data.breed,
-            bio: data.bio,
-            born_at: selectedDay.toISOString(),
-            image: data.petImage[0].name
-        })
     }
 
     //presets for the datePicker -> dog's age
     const today: Date = new Date();
     const [selectedDay, setSelectedDay] = useState<any>(today);
-    useEffect(()=>{
-        console.log(selectedDay)
-    }, [selectedDay])
 
     return (
-        <>
+        <div className='layout'>
         <Header />
         <div className={styles.container}>
             <div className={styles.formContainer}>
@@ -98,6 +125,14 @@ const Account: NextPage = () => {
                 <div>
                     <form onSubmit={handleSubmit(onNameSubmit)}>
                         <div className="inputContainer">
+                            <label htmlFor="userImage" className='p-4 flex justify-center relative'>
+                                <div className='flex w-36 h-36 relative'>
+                                    {session?.user?.image ? 
+                                    <img src={session?.user?.image} className="cursor-pointer rounded-full w-36 h-36 z-10" alt="" /> : null}
+                                    <input id="userImage" className="hidden" type="file" {...register('userImage', { required: true })} />
+                                    {errors.userImage && <span className='input-error'>This field is required</span>}
+                                </div>
+                            </label>
                             <input placeholder={session?.user?.name || 'your name'} {...register('name', { required: true })} className='input' />
                             {errors.name && <span className='input-error'>This field is required</span>}
                         </div>
@@ -137,7 +172,6 @@ const Account: NextPage = () => {
                     </select>
                     {errorsNewPet.type && <span className='input-error'>This field is required</span>}
                 </div>
-                {/* TODO load available breeds based on chosen pet type */}
                 <div className="inputContainer">
                     <select placeholder='Breed of your pet' {...registerNewPet('breed', { required: true })} className='input'>
                         {breedList?.map((breed)=>(
@@ -149,7 +183,6 @@ const Account: NextPage = () => {
                 <div className="inputContainer">
                     <textarea placeholder='Bio.. write something about your pet' {...registerNewPet('bio', { required: false })} className='input' />
                 </div>
-                {/* TODO inplement a datePicker */}
                 <div className="inputContainer">
                     <DayPicker
                         fromYear={2005}
@@ -165,8 +198,18 @@ const Account: NextPage = () => {
             </form>
         </div>
 
+        <div>
+            {myJobs?.map((item)=>(
+                <JobListItem job={item} key={item.id} mode='myAccount' />
+            ))}
+            <Button onClick={()=>{handleOpenJobForm()}} priority="low">Add a new job</Button>
+            <div ref={jobFormRef} className='hidden fixed top-0 left-0 w-full h-full bg-white bg-opacity-50 place-items-center place-content-center'>
+                <div className='relative r-0'>Close</div>
+                <JobForm myPets={myPets} closeJobForm={handleCloseJobForm} />
+            </div>
+        </div>
     <Footer />
-    </>
+    </div>
     );
 }
 

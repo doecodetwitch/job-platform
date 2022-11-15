@@ -18,7 +18,7 @@ const Pets: NextPage = () => {
     }
 
     return (
-        <>
+        <div className='layout'>
             <Header />
             <h1>This will be a list of all pets?</h1>
             <div className='grid gap-x-6 gap-y-6 grid-cols-12'>
@@ -29,7 +29,7 @@ const Pets: NextPage = () => {
                 ))}
             </div>
             <Footer />
-        </>
+        </div>
     );
 }
 

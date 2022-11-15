@@ -1,3 +1,20 @@
+.lowerPriorityButton { @apply
+    inline-flex
+    items-center
+    justify-center
+    rounded-md
+    py-1
+    px-2
+    text-xs
+    font-light
+    focus:outline-none
+    focus-visible:outline-2
+    focus-visible:outline-offset-2
+    bg-white
+    text-brand-black
+    hover:bg-gray-50
+}
+
 .lowPriorityButton { @apply
     inline-flex
     items-center
@@ -69,4 +86,28 @@
     items-center
     gap-x-5
     md:gap-x-8
+}
+
+.buttonFill { @apply
+    w-full
+}
+
+.buttonSmall { @apply
+    p-1
+    text-sm
+}
+
+.buttonMedium { @apply
+    p-2
+    text-base
+}
+
+.buttonLarge { @apply
+    p-4
+    text-2xl
+}
+
+.buttonXl{ @apply
+    p-6
+    text-4xl
 }
