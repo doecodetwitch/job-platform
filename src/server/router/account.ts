@@ -201,4 +201,44 @@ export const accountRouter = createProtectedRouter()
 
       return jobs;
     }
-  });
+  }).mutation("sendFriendRequest", {
+      input: z.object({
+        senderId: z.string(),
+        receiverId: z.string()
+      }),
+      async resolve({ ctx, input }) {
+        if (input?.senderId === ctx.session.user.id) {
+          await ctx.prisma.friendRequest.findFirst({
+            where: {
+              senderId: input.senderId,
+              receiverId: input.receiverId
+            }
+          }).then(async (data) => {
+            if (data === null) {
+              await ctx.prisma.friendRequest.create({
+                data: {
+                  senderId: input.senderId,
+                  receiverId: input.receiverId
+                },
+              }).then(()=>{
+                return 'success'
+              }).catch(() => {
+                return 'error'
+              });
+            } else {
+              throw new TRPCError({
+                code: 'BAD_REQUEST',
+                message: 'This friend request has already been sent.',
+              });
+            }
+          }).catch((error) => {
+            console.log('error', error)
+          });
+        } else {
+          throw new TRPCError({
+            code: 'UNAUTHORIZED',
+            message: 'The user is not authorized to send this friend request.',
+          });
+        }
+      },
+    });
