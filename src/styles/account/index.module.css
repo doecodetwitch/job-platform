@@ -1,10 +1,12 @@
-.container { @apply 
+.container { @apply
+    min-w-max
     flex
+    justify-center
+    items-center
     flex-col;
 }
 
 .formContainer { @apply
-    bg-red-50
     rounded-sm
     p-4;
 }
@@ -14,4 +16,51 @@
     gap-x-6 
     gap-y-6
     grid-cols-12
+}
+
+.userImageContainer { @apply 
+    relative 
+    flex 
+    items-end;
+}
+
+.userImage { @apply
+    rounded-full 
+    w-36 
+    h-36;
+}
+
+.userImageOverlay { @apply
+    absolute 
+    h-36 
+    w-36 
+    rounded-full 
+    opacity-0 
+    hover:backdrop-blur-sm 
+    hover:opacity-100 
+    duration-150
+    cursor-pointer;
+}
+
+.userImageOverlayText { @apply
+    my-14 
+    font-bold 
+    text-center 
+    text-white;
+}
+
+.inputError { @apply
+    text-rose-500 
+    font-semibold 
+    text-sm 
+    flex-none;
+}
+
+.usernameInput { @apply
+    border-rose-50
+    border-2
+    rounded-lg
+    h-10
+    w-64
+    mt-4
 }
