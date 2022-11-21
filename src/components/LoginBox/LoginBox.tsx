@@ -16,7 +16,7 @@ interface LoginBoxProps {
 // TODO - fix callback url, use callbackUrl from query parameter
 const LoginBox = ({providers}: LoginBoxProps) => {
 
-    let providerToIconMap:any = {
+    const providerToIconMap:any = {
         google: googleIcon.src,
         discord: discordIcon.src,
         facebook: facebookIcon.src
