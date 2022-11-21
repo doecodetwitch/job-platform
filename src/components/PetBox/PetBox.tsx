@@ -1,8 +1,12 @@
 import styles from './PetBox.module.css';
+import Button from 'src/components/Button/Button';
+import {useSession} from "next-auth/react";
+import add_friend from "@/src/assets/add_friend.svg";
+import React from "react";
 import { useEffect, useState } from 'react';
 
 const PetBox = (props: any) => {
-
+    const { data: session } = useSession({ required: true });
     const [days, setDays] = useState(0);
     const [isBirthday, setIsBirthday] = useState(false);
 
@@ -91,6 +95,13 @@ const PetBox = (props: any) => {
                 <div className={styles.rightNameContainer}>
                     <p className={styles.petName}>{props.pet.name}</p>
                     <p className={styles.petBreed}>{props.pet.breed}</p>
+                    <p className={styles.petBreed}>7 years, birtday in 273 days</p>
+                    {props.mode === 'petListing' ?
+                    <Button priority='low' onClick={()=>props.sendFriendRequestMutation.mutate({senderId: session?.user?.id, receiverId: props.pet.userId})}>
+                        <img src={add_friend.src} alt="Add" width='30' />
+                    </Button> :
+                    null}
+                    {/* TODO get age and count to birthday */}
                     <p className={isBirthday ? styles.petBirthday : styles.petCounterBirthday}>{isBirthday ? 'Happy Birthday!' : howOldIsYourDog + 'birthday in ' + days + (days == 1 ? ' day' : ' days')}</p>
                 </div>
             </div>

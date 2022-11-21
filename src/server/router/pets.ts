@@ -1,5 +1,4 @@
 import { createRouter } from "./context";
-import { resolve } from "path";
 
 export const petsRouter = createRouter().query("getAllPets", {
     async resolve({ctx}){

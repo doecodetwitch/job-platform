@@ -4,6 +4,7 @@ const Switch = (props: any) => {
     const [toggle , setToggle ] = useState(false);
     const toggleClass = 'transform translate-x-6';
     const toggleBgClass = 'bg-green-500';
+    const notToggleBgClass = 'bg-gray-300';
 
     const _handleClick = () => {
         props.action();
@@ -17,7 +18,7 @@ const Switch = (props: any) => {
     return (
         //   Switch Container
         <div
-            className={"md:w-14 md:h-8 w-12 h-6 flex items-center bg-gray-300 rounded-full p-1 cursor-pointer "  +  (toggle ? null : toggleBgClass)}
+            className={"md:w-14 md:h-8 w-12 h-6 flex items-center rounded-full p-1 cursor-pointer "  +  (toggle ? notToggleBgClass : toggleBgClass)}
             onClick={() => {
                 _handleClick();
             }}

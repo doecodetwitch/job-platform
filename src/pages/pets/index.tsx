@@ -8,6 +8,14 @@ import Footer from '@/src/components/Footer/Footer';
 const Pets: NextPage = () => {
 
     const pets = trpc.useQuery(['pets.getAllPets']);
+    const sendFriendRequestMutation = trpc.useMutation('account.sendFriendRequest', {
+        onSuccess: () => {
+            console.log('success');
+        },
+        onError: (error) => {
+            console.log('error', error);
+        },
+    })
 
     if (!pets.data) {
         return (
@@ -24,7 +32,7 @@ const Pets: NextPage = () => {
             <div className='grid gap-x-6 gap-y-6 grid-cols-12'>
                 {pets.data?.map((item) => (
                     <div key={item.id} className='col-span-4'>
-                        <PetBox pet={item} />
+                        <PetBox pet={item} mode='petListing' sendFriendRequestMutation={sendFriendRequestMutation} />
                     </div>
                 ))}
             </div>
