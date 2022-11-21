@@ -11,6 +11,7 @@ import Footer from '@/src/components/Footer/Footer';
 import JobForm from '@/src/components/Account/JobForm/JobForm';
 import Button from '@/src/components/Button/Button';
 import JobListItem from '@/src/components/Job/JobListItem';
+import Link from 'next/link';
 
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
@@ -119,6 +120,13 @@ const Account: NextPage = () => {
     return (
         <div className='layout'>
         <Header />
+
+        <div className='w-full flex space-x-2'>
+            <div className='py-4 hover:bg-amber-50 px-2'>
+                <Link href='/account/friends'>My friends</Link>
+            </div>
+        </div>
+
         <div className={styles.container}>
             <div className={styles.formContainer}>
                 <h1>Your data</h1>

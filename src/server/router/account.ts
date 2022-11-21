@@ -1,6 +1,5 @@
 import { createProtectedRouter } from "./context";
 import z from 'zod';
-import { resolve } from "path";
 import S3 from 'aws-sdk/clients/s3';
 import { TRPCError } from '@trpc/server';
 
@@ -21,7 +20,125 @@ const config = {
 
 // Example router with queries that can only be hit if the user requesting is signed in
 export const accountRouter = createProtectedRouter()
-  .mutation("updateName", {
+    .query("getUserDetails", {
+      async resolve({ ctx }) {
+        const userDetails = await ctx.prisma.user.findUnique({
+          where: {
+            id: ctx.session.user.id
+          },
+          include: {
+            receivedFriendRequests: true,
+            friends: true
+          },
+        });
+
+        return userDetails;
+      }
+    }).query("getFriendRequestDetails", {
+      input: z.object({
+        id: z.string()
+      }),
+      async resolve({ ctx, input }) {
+        const friendRequestDetails = await ctx.prisma.friendRequest.findUnique({
+          where: {
+            id: input.id
+          },
+          include: {
+            sender: true
+          },
+        });
+
+        if (friendRequestDetails?.receiverId === ctx.session.user.id) {
+            return friendRequestDetails;
+        } else {
+          throw new TRPCError({
+            code: 'UNAUTHORIZED',
+            message: 'The user is not authorized to see this request.',
+          });
+        }
+      }
+    }).mutation("acceptFriendRequest", {
+      input: z.object({
+        id: z.string()
+      }),
+      async resolve({ ctx, input }) {
+        const friendRequest = await ctx.prisma.friendRequest.findUnique({
+          where: {
+            id: input.id,
+          }
+        });
+
+        if (friendRequest?.receiverId === ctx.session.user.id) {
+          await ctx.prisma.user.update({
+            where: {
+              id: ctx.session.user.id,
+            },
+            data: {
+              friends: {
+                connect: {
+                  id: friendRequest.senderId
+                }
+              }
+            }
+          }).then(async () => {
+            await ctx.prisma.user.update({
+              where: {
+                id: friendRequest.senderId,
+              },
+              data: {
+                friends: {
+                  connect: {
+                    id: ctx.session.user.id
+                  }
+                }
+              }
+            })
+          }).then(async () => {
+            await ctx.prisma.friendRequest.update({
+              where: {
+                id: input.id,
+              },
+              data: {
+                accepted: true
+              }
+            }).then(()=>{
+              return 'success';
+            })
+          })
+        } else {
+          throw new TRPCError({
+            code: 'UNAUTHORIZED',
+            message: 'The user is not authorized to accept this request.',
+          });
+        }
+      },
+    }).mutation("declineFriendRequest", {
+      input: z.object({
+        id: z.string()
+      }),
+      async resolve({ ctx, input }) {
+        const friendRequest = await ctx.prisma.friendRequest.findUnique({
+          where: {
+            id: input.id,
+          }
+        });
+
+        if (friendRequest?.receiverId === ctx.session.user.id) {
+          await ctx.prisma.friendRequest.delete({
+            where: {
+              id: input.id,
+            }
+          }).then(()=>{
+            return 'success';
+          })
+        } else {
+          throw new TRPCError({
+            code: 'UNAUTHORIZED',
+            message: 'The user is not authorized to accept this request.',
+          });
+        }
+      },
+    }).mutation("updateName", {
     input: z.object({
       name: z.string().min(1),
       image: z.string()
