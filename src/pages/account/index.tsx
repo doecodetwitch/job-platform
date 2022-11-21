@@ -119,28 +119,26 @@ const Account: NextPage = () => {
     return (
         <div className='layout'>
             <Header />
-            <h1>Tutaj możesz zmienić swój ryjec i imię swoje też</h1>
-            <h4>Ale bez chirurga może to się nie udać, a poza tym nwm co na to CBŚ</h4>
-            <div className={styles.container}>
-                <div className={styles.formContainer}>
-                    <div>
-                        <form onSubmit={handleSubmit(onNameSubmit)}>
-                            <div className="inputContainer">
-                                <label htmlFor="userImage" className='p-4 flex justify-center'>
-                                    <div className={styles.userImageContainer}>
-                                        {session?.user?.image ?
-                                            <img src={session?.user?.image} className={styles.userImage} alt="" /> : null}
-                                        <input id="userImage" className="hidden" type="file" {...register('userImage', { required: true })} />
-                                        {errors.userImage && <span className={styles.inputError}>This field is required</span>}
-                                        <div className={styles.userImageOverlay}><p className={styles.userImageOverlayText}>Change avatar</p></div>
-                                    </div>
-                                </label>
-                                <input placeholder={session?.user?.name || 'your name'} {...register('name', { required: true })} className={styles.usernameInput} />
-                                {errors.name && <span className={styles.inputError}>This field is required</span>}
-                            </div>
-                            <button type="submit">Submit</button>
-                        </form>
-                    </div>
+            <h1 className={styles.dataSectionTitle}>Tutaj możesz zmienić swój ryjec i imię swoje też.</h1>
+            <p className={styles.dataSectionDescription}>Ale bez chirurga może to się nie udać, a poza tym nwm co na to CBŚ.</p>
+            <div className={styles.dataSectionContainer}>
+                <div className={styles.dataSectionFormContainer}>
+                    <form onSubmit={handleSubmit(onNameSubmit)}>
+                        <div>
+                            <label htmlFor="userImage" className=''>
+                                <div className={styles.userImageContainer}>
+                                    {session?.user?.image ?
+                                        <img src={session?.user?.image} className={styles.userImage} alt="" /> : null}
+                                    <input id="userImage" className="hidden" type="file" {...register('userImage', { required: true })} />
+                                    {errors.userImage && <p className={styles.inputError}>This field is required</p>}
+                                    <div className={styles.userImageOverlay}><p className={styles.userImageOverlayText}>Change avatar</p></div>
+                                </div>
+                            </label>
+                            <input placeholder={session?.user?.name || 'your name'} {...register('name', { required: true })} className={styles.usernameInput} />
+                            {errors.name && <p className={styles.inputError}>This field is required</p>}
+                        </div>
+                        <Button priority="low">Submit</Button>
+                    </form>
                 </div>
             </div>
 

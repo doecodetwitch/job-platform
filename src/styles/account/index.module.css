@@ -1,4 +1,23 @@
-.container { @apply
+.dataSectionTitle { @apply
+    px-4
+    text-center
+    text-3xl
+    sm:text-4xl
+    text-slate-900
+    tracking-tight
+    mt-3
+}
+
+.dataSectionDescription { @apply 
+    px-3
+    text-center
+    text-base
+    sm:text-lg
+    text-slate-700
+    my-4
+}
+
+.dataSectionContainer { @apply
     min-w-max
     flex
     justify-center
@@ -6,22 +25,16 @@
     flex-col;
 }
 
-.formContainer { @apply
+.dataSectionFormContainer { @apply
     rounded-sm
     p-4;
 }
 
-.myPetsContainer { @apply
-    grid 
-    gap-x-6 
-    gap-y-6
-    grid-cols-12
-}
-
 .userImageContainer { @apply 
     relative 
-    flex 
-    items-end;
+    flex
+    items-center
+    justify-center;
 }
 
 .userImage { @apply
@@ -36,31 +49,46 @@
     w-36 
     rounded-full 
     opacity-0 
-    hover:backdrop-blur-sm 
+    hover:backdrop-blur-md
     hover:opacity-100 
-    duration-150
+    duration-200
     cursor-pointer;
 }
 
 .userImageOverlayText { @apply
-    my-14 
+    my-16
     font-bold 
     text-center 
     text-white;
+}
+
+.usernameInput { @apply
+    shadow 
+    appearance-none 
+    border 
+    rounded 
+    w-full 
+    py-2 
+    px-3
+    my-3
+    text-gray-700 
+    leading-tight 
+    focus:ring
+    focus:ring-blue-400
 }
 
 .inputError { @apply
     text-rose-500 
     font-semibold 
     text-sm 
-    flex-none;
+    flex-none
+    italic
+    pb-2;
 }
 
-.usernameInput { @apply
-    border-rose-50
-    border-2
-    rounded-lg
-    h-10
-    w-64
-    mt-4
+.myPetsContainer { @apply
+    grid 
+    gap-x-6 
+    gap-y-6
+    grid-cols-12
 }
