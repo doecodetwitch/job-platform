@@ -1,6 +1,7 @@
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
 import GoogleProvider from "next-auth/providers/google";
+import FacebookProvider from "next-auth/providers/facebook";
 // import CredentialsProvider from "next-auth/providers/credentials"
 
 // Prisma adapter for NextAuth, optional and can be removed
@@ -30,6 +31,11 @@ export const authOptions: NextAuthOptions = {
       id: "discord",
       clientId: env.DISCORD_CLIENT_ID,
       clientSecret: env.DISCORD_CLIENT_SECRET,
+    }),
+    FacebookProvider({
+      id: "facebook",
+      clientId: env.FACEBOOK_CLIENT_ID,
+      clientSecret: env.FACEBOOK_CLIENT_SECRET,
     }),
     // CredentialsProvider({
     //   // The name to display on the sign in form (e.g. 'Sign in with...')
