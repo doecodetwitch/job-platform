@@ -20,7 +20,7 @@ const Jobs: NextPage = () => {
         <>
             <Header />
             <div className='layout'>
-                {jobs.data?.map((item) => (
+                {jobs.data?.map((item:any) => (
                     <JobListItem job={item} key={item.id} />
                 ))}
             </div>

@@ -207,7 +207,7 @@ const Account: NextPage = () => {
         </div>
 
         <div>
-            {myJobs?.map((item)=>(
+            {myJobs?.map((item:any)=>(
                 <JobListItem job={item} key={item.id} mode='myAccount' />
             ))}
             <Button onClick={()=>{handleOpenJobForm()}} priority="low">Add a new job</Button>

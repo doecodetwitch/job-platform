@@ -26,6 +26,7 @@
 .petBreed { @apply
     mt-1 
     text-sm 
+    leading-none
     text-slate-500;
 }
 
@@ -33,4 +34,16 @@
     text-base
     font-normal
     mt-4;
+}
+
+.petCounterBirthday { @apply
+   mt-1
+    text-sm 
+    leading-none
+    text-slate-500;
+}
+
+.petBirthday { @apply
+    text-sm 
+    text-red-500;
 }
