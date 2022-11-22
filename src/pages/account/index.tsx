@@ -19,7 +19,7 @@ import 'react-day-picker/dist/style.css';
 const Account: NextPage = () => {
     const { data: session } = useSession({ required: true });
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const {register: registerNewPet, handleSubmit: handleSubmitNewPet, formState: { errors: errorsNewPet } } = useForm();
+    const { register: registerNewPet, handleSubmit: handleSubmitNewPet, formState: { errors: errorsNewPet } } = useForm();
     const jobFormRef = useRef<HTMLDivElement>(null);
 
     const handleOpenJobForm = () => {
@@ -63,10 +63,10 @@ const Account: NextPage = () => {
     const [petType, setPetType] = useState('Dog');
     const [breedList, setBreedList] = useState<string[]>([]);
 
-    useEffect(()=>{
+    useEffect(() => {
         const chosenPetType = petTypes?.find(o => o.name === petType);
         const Arr = chosenPetType?.breeds?.split(',');
-        if(Arr){
+        if (Arr) {
             setBreedList(Arr);
         }
     }, [petType, petTypes])
@@ -78,7 +78,7 @@ const Account: NextPage = () => {
     const onNameSubmit = async (data: any) => {
         const userImageName = session?.user?.id + data.userImage[0].name;
         const s3FileUploadUrl = await getS3FileUploadUrl({ name: userImageName, type: data.userImage[0].type });
-        
+
         await axios.put(s3FileUploadUrl, data.userImage[0], {
             headers: {
                 "Content-type": data.userImage[0].type,
@@ -120,7 +120,8 @@ const Account: NextPage = () => {
     return (
         <div className='layout'>
         <Header />
-
+        <h1 className={styles.dataSectionTitle}>Tutaj możesz zmienić swój ryjec i imię swoje też.</h1>
+        <p className={styles.dataSectionDescription}>Ale bez chirurga może to się nie udać, a poza tym nwm co na to CBŚ.</p>
         <div className='w-full flex space-x-2'>
             <div className='py-4 hover:bg-amber-50 px-2'>
                 <Link href='/account/friends'>My friends</Link>
@@ -131,93 +132,98 @@ const Account: NextPage = () => {
             <div className={styles.formContainer}>
                 <h1>Your data</h1>
                 <div>
+            <div className={styles.dataSectionContainer}>
+                <div className={styles.dataSectionFormContainer}>
                     <form onSubmit={handleSubmit(onNameSubmit)}>
-                        <div className="inputContainer">
-                            <label htmlFor="userImage" className='p-4 flex justify-center relative'>
-                                <div className='flex w-36 h-36 relative'>
-                                    {session?.user?.image ? 
-                                    <img src={session?.user?.image} className="cursor-pointer rounded-full w-36 h-36 z-10" alt="" /> : null}
+                        <div>
+                            <label htmlFor="userImage" className=''>
+                                <div className={styles.userImageContainer}>
+                                    {session?.user?.image ?
+                                        <img src={session?.user?.image} className={styles.userImage} alt="" /> : null}
                                     <input id="userImage" className="hidden" type="file" {...register('userImage', { required: true })} />
-                                    {errors.userImage && <span className='input-error'>This field is required</span>}
+                                    {errors.userImage && <p className={styles.inputError}>This field is required</p>}
+                                    <div className={styles.userImageOverlay}><p className={styles.userImageOverlayText}>Change avatar</p></div>
                                 </div>
                             </label>
-                            <input placeholder={session?.user?.name || 'your name'} {...register('name', { required: true })} className='input' />
-                            {errors.name && <span className='input-error'>This field is required</span>}
+                            <input placeholder={session?.user?.name || 'your name'} {...register('name', { required: true })} className={styles.usernameInput} />
+                            {errors.name && <p className={styles.inputError}>This field is required</p>}
                         </div>
-                        <button type="submit">Submit</button>
+                        <Button priority="low">Submit</Button>
                     </form>
                 </div>
             </div>
-        </div>
 
-        <div className={styles.myPetsContainer}>
-            {myPets.data?.map((pet) => (
+            <div className={styles.myPetsContainer}>
+                {myPets.data?.map((pet) => (
                     <div key={pet.id} className='col-span-4'>
                         <PetBox pet={pet} />
                     </div>
-                    ))}
-        </div>
+                ))}
+            </div>
 
-        <div className={styles.formContainer}>
-            <h2>Create a pet profile</h2>
-            <form onSubmit={handleSubmitNewPet(onCreatePetSubmit)}>
-                <div className="inputContainer">
-                    <input placeholder='Name of your pet' {...registerNewPet('petName', { required: true })} className='input' />
-                    {errorsNewPet.petName && <span className='input-error'>This field is required</span>}
-                </div>
-                <div className="inputContainer">
-                    <input type='file' placeholder='Name of your pet' {...registerNewPet('petImage', { required: true })} className='input' />
-                    {errorsNewPet.petImage && <span className='input-error'>This field is required</span>}
-                </div>
-                {/* TODO load available pet types from db */}
-                <div className="inputContainer">
-                    <select placeholder='Type of your pet' {...registerNewPet("type", { required: true })} className='input' onChange={(e)=>onChangePetType(e)} >
-                        {petTypes?.map((petType)=>(
+            <div className={styles.formContainer}>
+                <h2>Create a pet profile</h2>
+                <form onSubmit={handleSubmitNewPet(onCreatePetSubmit)}>
+                    <div className="inputContainer">
+                        <input placeholder='Name of your pet' {...registerNewPet('petName', { required: true })} className='input' />
+                        {errorsNewPet.petName && <span className='input-error'>This field is required</span>}
+                    </div>
+                    <div className="inputContainer">
+                        <input type='file' placeholder='Name of your pet' {...registerNewPet('petImage', { required: true })} className='input' />
+                        {errorsNewPet.petImage && <span className='input-error'>This field is required</span>}
+                    </div>
+                    {/* TODO load available pet types from db */}
+                    <div className="inputContainer">
+                        <select placeholder='Type of your pet' {...registerNewPet("type", { required: true })} className='input' onChange={(e) => onChangePetType(e)} >
+                            {petTypes?.map((petType) => (
                                 <option key={petType.name} value={petType.name}>
                                     {petType.name}
                                 </option>
                         ))}
-                    </select>
-                    {errorsNewPet.type && <span className='input-error'>This field is required</span>}
-                </div>
-                <div className="inputContainer">
-                    <select placeholder='Breed of your pet' {...registerNewPet('breed', { required: true })} className='input'>
-                        {breedList?.map((breed)=>(
-                                <option key={breed} value={breed}>{breed}</option>
-                        ))}
-                    </select>
-                    {errorsNewPet.breed && <span className='input-error'>This field is required</span>}
-                </div>
-                <div className="inputContainer">
-                    <textarea placeholder='Bio.. write something about your pet' {...registerNewPet('bio', { required: false })} className='input' />
-                </div>
-                <div className="inputContainer">
-                    <DayPicker
-                        fromYear={2005}
-                        toYear={2022}
-                        captionLayout="dropdown"
-                        mode="single"
-                        required
-                        selected={selectedDay}
-                        onSelect={setSelectedDay}
-                    />
-                </div>
-                <button type="submit">Add a pet</button>
-            </form>
-        </div>
-
-        <div>
-            {myJobs?.map((item:any)=>(
-                <JobListItem job={item} key={item.id} mode='myAccount' />
-            ))}
-            <Button onClick={()=>{handleOpenJobForm()}} priority="low">Add a new job</Button>
-            <div ref={jobFormRef} className='hidden fixed top-0 left-0 w-full h-full bg-white bg-opacity-50 place-items-center place-content-center'>
-                <div className='relative r-0'>Close</div>
-                <JobForm myPets={myPets} closeJobForm={handleCloseJobForm} />
+                        </select>
+                        {errorsNewPet.type && <span className='input-error'>This field is required</span>}
+                    </div>
+                    <div className="inputContainer">
+                        <select placeholder='Breed of your pet' {...registerNewPet('breed', { required: true })} className='input'>
+                            {breedList?.map((breed)=>(
+                                    <option key={breed} value={breed}>{breed}</option>
+                            ))}
+                        </select>
+                        {errorsNewPet.breed && <span className='input-error'>This field is required</span>}
+                    </div>
+                    <div className="inputContainer">
+                        <textarea placeholder='Bio.. write something about your pet' {...registerNewPet('bio', { required: false })} className='input' />
+                    </div>
+                    <div className="inputContainer">
+                        <DayPicker
+                            fromYear={2005}
+                            toYear={2022}
+                            captionLayout="dropdown"
+                            mode="single"
+                            required
+                            selected={selectedDay}
+                            onSelect={setSelectedDay}
+                        />
+                    </div>
+                    <button type="submit">Add a pet</button>
+                </form>
             </div>
+
+            <div>
+                {myJobs?.map((item:any)=>(
+                    <JobListItem job={item} key={item.id} mode='myAccount' />
+                ))}
+                <Button onClick={()=>{ handleOpenJobForm() }} priority="low">Add a new job</Button>
+                <div ref={jobFormRef} className='hidden fixed top-0 left-0 w-full h-full bg-white bg-opacity-50 place-items-center place-content-center'>
+                    <div className='relative r-0'>Close</div>
+                    <JobForm myPets={myPets} closeJobForm={handleCloseJobForm} />
+                </div>
+            </div>
+        <Footer />
         </div>
-    <Footer />
-    </div>
+        </div>
+        </div>
+        </div>
     );
 }
 
