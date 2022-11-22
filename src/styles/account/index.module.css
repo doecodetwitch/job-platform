@@ -1,12 +1,89 @@
-.container { @apply 
+.dataSectionTitle { @apply
+    px-4
+    text-center
+    text-3xl
+    sm:text-4xl
+    text-slate-900
+    tracking-tight
+    mt-3
+}
+
+.dataSectionDescription { @apply 
+    px-3
+    text-center
+    text-base
+    sm:text-lg
+    text-slate-700
+    my-4
+}
+
+.dataSectionContainer { @apply
+    min-w-max
     flex
+    justify-center
+    items-center
     flex-col;
 }
 
-.formContainer { @apply
-    bg-red-50
+.dataSectionFormContainer { @apply
     rounded-sm
     p-4;
+}
+
+.userImageContainer { @apply 
+    relative 
+    flex
+    items-center
+    justify-center;
+}
+
+.userImage { @apply
+    rounded-full 
+    w-36 
+    h-36;
+}
+
+.userImageOverlay { @apply
+    absolute 
+    h-36 
+    w-36 
+    rounded-full 
+    opacity-0 
+    hover:backdrop-blur-md
+    hover:opacity-100 
+    duration-200
+    cursor-pointer;
+}
+
+.userImageOverlayText { @apply
+    my-16
+    font-bold 
+    text-center 
+    text-white;
+}
+
+.usernameInput { @apply
+    shadow 
+    appearance-none 
+    border 
+    rounded 
+    w-full 
+    py-2 
+    px-3
+    my-3
+    text-gray-700 
+    leading-tight 
+    focus:ring
+    focus:ring-blue-400
+}
+
+.inputError { @apply
+    text-rose-500 
+    font-semibold 
+    text-sm 
+    flex-none
+    italic
+    pb-2;
 }
 
 .myPetsContainer { @apply

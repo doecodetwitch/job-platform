@@ -34,7 +34,7 @@
     active:bg-blue-800
     active:text-blue-100
     focus-visible:outline-blue-600
-    mx-2
+    /* mx-2 */  
 }
 
 .midPriorityButton { @apply
