@@ -5,6 +5,7 @@
 
 .logoContainer { @apply
     flex 
+    relative
     items-center 
     justify-center 
     mb-5 

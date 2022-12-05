@@ -1,0 +1,17 @@
+.petFormContainer { @apply
+    min-w-[400px] 
+    bg-white p-6;
+}
+
+.petFormTitle { @apply 
+    flex
+    items-center 
+    mb-4;
+}
+
+.petFormError { @apply
+    text-rose-500 
+    font-semibold 
+    text-sm
+    italic;
+}
