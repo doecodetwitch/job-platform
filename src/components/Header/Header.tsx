@@ -17,7 +17,7 @@ const Header = () => {
                 <Link href='/'>
                     <a className={styles.menuContainer}>Home</a>
                 </Link>
-                <Link href='/pets'>
+                <Link href='/dogs'>
                     <a className={styles.menuContainer}>Dogs</a>
                 </Link>
                 <Link href='/jobs'>
