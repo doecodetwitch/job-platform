@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import price_tag from '@/src/assets/price_tag.svg';
 import Button from '../Button/Button';
 import AccountJobDetail from "@/src/components/Account/AccountJobDetail/AccountJobDetail";
+import Link from 'next/link'
 
 const JobListItem = ({job, mode}: any) => {
     const [editMode, setEditMode] = useState(false);
@@ -18,7 +19,7 @@ const JobListItem = ({job, mode}: any) => {
                     <div className='flex items-center mt-6 justify-end'>
                         <div className='grow flex space-x-2 items-center'>
                             <Button priority='lower'>
-                                See more
+                               <Link href={`/jobs/${encodeURIComponent(job.id)}`}>See More</Link>
                             </Button>
                             {mode === 'myAccount' &&
                                 <>

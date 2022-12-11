@@ -1,0 +1,13 @@
+.spinnerWrapper { @apply
+    w-full
+    my-16
+    flex
+    justify-items-center
+    justify-center
+    items-center
+    content-center
+}
+
+.loadingCapition { @apply
+    mt-2
+}
