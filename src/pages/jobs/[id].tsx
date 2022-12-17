@@ -2,10 +2,16 @@ import type { NextPage } from 'next'
 import { trpc } from "@/src/utils/trpc";
 import { useRouter } from 'next/router';
 import DataPage from '@/src/components/DataPage/DataPage';
+import {isString, isUndefined} from "is-what";
 
 const Jobs: NextPage = () => {
     const router = useRouter();
-    const query = trpc.useQuery(['jobs.getJobById', { id: router.query.id }]);
+    if (isUndefined(router.query.id) || !isString(router.query.id)) {
+        return(<>
+            <h1>This job no longer exist.</h1>
+        </>)
+    }
+    const query = trpc.useQuery(['jobs.getJobById', {id: router.query.id}]);
 
     return (
         <>
