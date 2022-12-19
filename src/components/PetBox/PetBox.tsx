@@ -95,13 +95,11 @@ const PetBox = (props: any) => {
                 <div className={styles.rightNameContainer}>
                     <p className={styles.petName}>{props.pet.name}</p>
                     <p className={styles.petBreed}>{props.pet.breed}</p>
-                    <p className={styles.petBreed}>7 years, birtday in 273 days</p>
                     {props.mode === 'petListing' ?
                     <Button priority='low' onClick={()=>props.sendFriendRequestMutation.mutate({senderId: session?.user?.id, receiverId: props.pet.userId})}>
                         <img src={add_friend.src} alt="Add" width='30' />
                     </Button> :
                     null}
-                    {/* TODO get age and count to birthday */}
                     <p className={isBirthday ? styles.petBirthday : styles.petCounterBirthday}>{isBirthday ? 'Happy Birthday!' : howOldIsYourDog + 'birthday in ' + days + (days == 1 ? ' day' : ' days')}</p>
                 </div>
             </div>
