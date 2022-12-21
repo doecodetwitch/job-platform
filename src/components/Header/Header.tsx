@@ -23,17 +23,20 @@ const Header = () => {
                 <Link href='/jobs'>
                     <a className={styles.menuContainer}>Jobs</a>
                 </Link>
-                <Link href='/account'>
-                    <a className={styles.menuContainer}>Dog-lovers</a>
-                </Link>
             </div>
-            <div className="flex">
-
+            <div className="flex mr-4">
                 {session ?
-                <Button
-                    onClick={()=>signOut()}
-                    priority="low"
-                >Log Out</Button> :
+                <>
+                    <div className="my-auto">
+                        <Link href='/account'>
+                            <a className={styles.menuContainer}>Account</a>
+                        </Link>
+                    </div>
+                    <Button
+                        onClick={()=>signOut()}
+                        priority="low"
+                    >Log Out</Button> 
+                </> :
                 <Button
                     onClick={()=>signIn()}
                     priority="low"
