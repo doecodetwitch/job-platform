@@ -156,7 +156,37 @@ export const accountRouter = createProtectedRouter()
 
       return user;
     },
-  }).mutation("addPet", {
+  }).mutation("removeUserFromFriends", {
+      input: z.object({
+        id: z.string(),
+      }),
+      async resolve({ ctx, input }) {
+        await ctx.prisma.user.update({
+          where: {
+            id: ctx.session.user.id,
+          },
+          data: {
+            friends: {
+              disconnect: [{id: input.id}]
+            }
+          }
+        }),
+        await ctx.prisma.user.update({
+          where: {
+            id: input.id,
+          },
+          data: {
+            friends: {
+              disconnect: [{id: ctx.session.user.id}]
+            }
+          }
+        }).catch(err => {
+          return err;
+        });
+
+        return 'success';
+      },
+    }).mutation("addPet", {
     input: z.object({
       name: z.string().min(1),
       type: z.string().min(3),
