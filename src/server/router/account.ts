@@ -69,6 +69,7 @@ export const accountRouter = createProtectedRouter()
         });
 
         if (friendRequest?.receiverId === ctx.session.user.id) {
+          //add sender to the receiver friend list
           await ctx.prisma.user.update({
             where: {
               id: ctx.session.user.id,
@@ -80,30 +81,29 @@ export const accountRouter = createProtectedRouter()
                 }
               }
             }
-          }).then(async () => {
-            await ctx.prisma.user.update({
-              where: {
-                id: friendRequest.senderId,
-              },
-              data: {
-                friends: {
-                  connect: {
-                    id: ctx.session.user.id
-                  }
+          }),
+          //add receiver to the sender friend list
+          await ctx.prisma.user.update({
+            where: {
+              id: friendRequest.senderId,
+            },
+            data: {
+              friends: {
+                connect: {
+                  id: ctx.session.user.id
                 }
               }
-            })
-          }).then(async () => {
-            await ctx.prisma.friendRequest.update({
-              where: {
-                id: input.id,
-              },
-              data: {
-                accepted: true
-              }
-            }).then(()=>{
-              return 'success';
-            })
+            }
+          }),
+          //when all the previous steps have completed, remove the friend request from the db
+          await ctx.prisma.friendRequest.delete({
+            where: {
+              id: input.id,
+            }
+          }).then(()=>{
+            return 'success';
+          }).catch((err) => {
+            return err;
           })
         } else {
           throw new TRPCError({
@@ -156,7 +156,37 @@ export const accountRouter = createProtectedRouter()
 
       return user;
     },
-  }).mutation("addPet", {
+  }).mutation("removeUserFromFriends", {
+      input: z.object({
+        id: z.string(),
+      }),
+      async resolve({ ctx, input }) {
+        await ctx.prisma.user.update({
+          where: {
+            id: ctx.session.user.id,
+          },
+          data: {
+            friends: {
+              disconnect: [{id: input.id}]
+            }
+          }
+        }),
+        await ctx.prisma.user.update({
+          where: {
+            id: input.id,
+          },
+          data: {
+            friends: {
+              disconnect: [{id: ctx.session.user.id}]
+            }
+          }
+        }).catch(err => {
+          return err;
+        });
+
+        return 'success';
+      },
+    }).mutation("addPet", {
     input: z.object({
       name: z.string().min(1),
       type: z.string().min(3),
