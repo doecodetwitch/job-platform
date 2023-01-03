@@ -91,6 +91,9 @@ const Account: NextPage = () => {
                 <div className='py-4 hover:bg-amber-50 px-2'>
                     <Link href='/account/friends'>My friends</Link>
                 </div>
+                <div className='py-4 hover:bg-amber-50 px-2'>
+                    <Link href='/account/address'>My address</Link>
+                </div>
             </div>
 
             <div className={styles.container}>

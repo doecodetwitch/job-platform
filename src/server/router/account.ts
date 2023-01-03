@@ -388,4 +388,40 @@ export const accountRouter = createProtectedRouter()
           });
         }
       },
+    })
+    .query("getUserAddress", {
+      async resolve({ ctx }) {
+        const userAddress = await ctx.prisma.userAddress.findFirst({
+          where: {
+            userId: ctx.session.user.id
+          }
+        });
+  
+        return userAddress;
+      }
+    })
+    .mutation("updateUserAddress", {
+      input: z.object({
+        country: z.string(),
+        city: z.string(),
+        street: z.string(),
+        houseNumber: z.string(),
+        postalCode: z.string()
+      }),
+      async resolve({ ctx, input }) {
+        await ctx.prisma.userAddress.update({
+          where: {
+            userId: ctx.session.user.id,
+          },
+          data: {
+            country: input.country,
+            city: input.city,
+            postalCode: input.postalCode,
+            street: input.street,
+            houseNumber: input.houseNumber
+          },
+        })
+  
+        return 'success';
+      },
     });
