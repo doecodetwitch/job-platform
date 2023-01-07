@@ -155,7 +155,56 @@ export const accountRouter = createProtectedRouter()
 
       return user;
     },
-  }).mutation("removeUserFromFriends", {
+  }).mutation("setupWorkingAccount", {
+      async resolve({ ctx }) {
+        const workingUser = await ctx.prisma.workingUser.create({
+          data: {
+            userId: ctx.session.user.id
+          },
+        })
+
+        return workingUser;
+      },
+    }).query("getAllServiceTypes", {
+      async resolve({ctx}) {
+        const services = ctx.prisma.serviceType.findMany();
+        return services;
+      }
+    }).query("getMyWorkingAccount", {
+      async resolve({ ctx }) {
+        const workingUser = await ctx.prisma.workingUser.findUnique({
+          where: {
+            userId: ctx.session.user.id
+          },
+          include: {
+            services: true
+          }
+        })
+
+        return workingUser;
+      },
+    }).mutation("addServiceToMyWorkingAccount", {
+      input: z.object ({
+        name: z.string(),
+        description: z.string().max(10000),
+        price: z.number(),
+        type: z.number().int(),
+        workingUserId: z.string()
+      }),
+      async resolve({ ctx, input }) {
+        const service = await ctx.prisma.service.create({
+          data: {
+            workingUserId: input.workingUserId,
+            name: input.name,
+            description: input.description,
+            price: input.price,
+            type: input.type
+          },
+        })
+
+        return service;
+      },
+    }).mutation("removeUserFromFriends", {
       input: z.object({
         id: z.string(),
       }),

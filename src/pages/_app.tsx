@@ -8,6 +8,7 @@ import type { AppType } from "next/app";
 import type { AppRouter } from "../server/router";
 import type { Session } from "next-auth";
 import "../styles/globals.css";
+import { appWithTranslation } from 'next-i18next'
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -68,4 +69,4 @@ export default withTRPC<AppRouter>({
    * @link https://trpc.io/docs/ssr
    */
   ssr: false,
-})(MyApp);
+})(appWithTranslation(MyApp));
