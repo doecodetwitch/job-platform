@@ -19,11 +19,10 @@
     inline-flex
     items-center
     justify-center
-    rounded-full
+    rounded-md
     py-2
-    px-4
+    px-8
     text-sm
-    font-semibold
     focus:outline-none
     focus-visible:outline-2
     focus-visible:outline-offset-2
@@ -34,14 +33,13 @@
     active:bg-blue-800
     active:text-blue-100
     focus-visible:outline-blue-600
-    /* mx-2 */  
 }
 
 .midPriorityButton { @apply
     inline-flex
     items-center
     justify-center
-    rounded-full
+    rounded-md
     py-2
     px-4
     text-sm
@@ -49,36 +47,27 @@
     focus:outline-none
     focus-visible:outline-2
     focus-visible:outline-offset-2
-    bg-violet-600
+    bg-brand-secondary
     text-white
     hover:text-slate-100
-    hover:bg-violet-500
-    active:bg-violet-800
-    active:text-violet-100
-    focus-visible:outline-violet-600
-    mx-2
+    hover:bg-brand-secondaryHover
 }
 
 .highPriorityButton { @apply
     inline-flex
     items-center
     justify-center
-    rounded-full
+    rounded-md
     py-2
     px-4
     text-sm
-    font-semibold
     focus:outline-none
     focus-visible:outline-2
     focus-visible:outline-offset-2
-    bg-red-600
+    bg-brand-black
     text-white
-    hover:text-slate-100
-    hover:bg-red-500
-    active:bg-red-800
-    active:text-red-100
+    hover:bg-black
     focus-visible:outline-red-600
-    mx-2
 }
 
 .divButton { @apply
@@ -98,7 +87,8 @@
 }
 
 .buttonMedium { @apply
-    p-2
+    px-8
+    py-2
     text-base
 }
 

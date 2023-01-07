@@ -1,24 +1,31 @@
 import styles from './Button.module.css';
 
-const Button = (props: any) => {
+type propsTypes = {
+    priority?: 'lower' | 'high' | 'mid' | 'low',
+    size?: any,
+    fill?: any,
+    onClick?: any,
+    children?: any
+}
+const Button = ({ priority, size, fill, onClick, children }: propsTypes) => {
 
     const buttonClasses = [];
     const wrapperClasses = [styles.divButton];
 
-    if(props.priority === "lower"){
+    if(priority === "lower"){
         buttonClasses.push(styles.lowerPriorityButton)
     }
-    else if(props.priority === "low"){
+    else if(priority === "low"){
         buttonClasses.push(styles.lowPriorityButton)
     }
-    else if (props.priority === "mid"){
+    else if (priority === "mid"){
         buttonClasses.push(styles.midPriorityButton)
     }
     else{
         buttonClasses.push(styles.highPriorityButton)
     }
 
-    switch (props.size) {
+    switch (size) {
         case "small":
             buttonClasses.push(styles.buttonSmall)
             break;
@@ -36,7 +43,7 @@ const Button = (props: any) => {
             break;
     }
 
-    if (props.fill) {
+    if (fill) {
         wrapperClasses.push(styles.buttonFill)
         buttonClasses.push(styles.buttonFill)
     }
@@ -44,10 +51,10 @@ const Button = (props: any) => {
     return (
             <div className={wrapperClasses.join(" ")}>
                 <button
-                    onClick={props.onClick}
+                    onClick={onClick}
                     className={buttonClasses.join(" ")}
                     >
-                    {props.children}
+                    {children}
                 </button>
             </div>
     );
