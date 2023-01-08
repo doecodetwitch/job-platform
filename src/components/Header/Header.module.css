@@ -1,32 +1,65 @@
 .headerContainer { @apply
     relative
-    z-0
+    z-[100]
+    sm:z-0
+    h-auto
+    w-auto
     flex
     mx-auto
-    xl:w-[1280px];
-}
-
-.navContainer { @apply
-    inline-block
-    flex
     items-center
-    flex-auto;
+    flex-wrap
+    xl:w-[1280px]
+    space-y-0
+    justify-between
+    bg-white;
 }
 
-.logoContainer { @apply
-    flex-none
-    w-24
-    h-24
+.headerContainerActive { @apply
+    fixed
+    sm:relative
+    z-[100]
+    sm:z-0
+    w-screen
+    sm:w-auto
+    h-screen
+    sm:h-auto
+    flex
+    flex-col
+    sm:flex-row
+    mx-auto
+    flex-wrap
+    xl:w-[1280px]
+    bg-white;
+}
+
+.mobileMenuButton { @apply
+    block
+    sm:hidden
+    h-6
+    w-6
+    cursor-pointer
+    right-0
     mr-4;
 }
 
-.menuContainer { @apply
-    rounded-lg
-    py-1
-    px-2
-    text-sm
-    text-slate-700
-    hover:bg-slate-100
-    hover:text-slate-900
-    mx-2;
+.mobileMenuButtonActive { @apply
+    h-6
+    w-6;
+}
+
+.mobileMenuContainer { @apply
+    sm:hidden
+    right-0
+    mr-4;
+}
+
+.logoContainer { @apply
+    w-24
+    h-24;
+}
+
+.logoAndMobileMenuContainerActive { @apply
+    items-center
+    flex
+    justify-between;
 }
