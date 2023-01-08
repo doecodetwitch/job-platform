@@ -16,7 +16,7 @@ const Menu = (props:any) => {
           window.removeEventListener('resize', handleResize);
           if(screenWidth >= 640){
             document.body.style['overflow'] = 'auto';
-            props.setOpen(!open);
+            props.setOpen(false);
           } else if(screenWidth < 640 && props.open){
             document.body.style['overflow'] = 'hidden';
           } else if(screenWidth < 640 && !props.open){
