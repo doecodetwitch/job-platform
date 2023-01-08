@@ -16,7 +16,7 @@ import 'react-day-picker/dist/style.css';
 import PetForm from '@/src/components/Account/PetForm/PetForm';
 
 const Account: NextPage = () => {
-    const { data: session } = useSession({ required: true });
+const { data: session } = useSession({ required: true });
     const { register, handleSubmit, formState: { errors } } = useForm();
     const jobFormRef = useRef<HTMLDivElement>(null);
     const petFormRef = useRef<HTMLDivElement>(null);
@@ -90,6 +90,9 @@ const Account: NextPage = () => {
             <div className='w-full flex space-x-2'>
                 <div className='py-4 hover:bg-amber-50 px-2'>
                     <Link href='/account/friends'>My friends</Link>
+                </div>
+                <div className='py-4 hover:bg-amber-50 px-2'>
+                    <Link href='/account/services'>Services</Link>
                 </div>
             </div>
 
