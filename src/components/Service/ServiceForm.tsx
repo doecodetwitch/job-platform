@@ -34,7 +34,7 @@ const ServiceForm = (props: any) => {
     console.log(services)
 
     return (
-        <div className='fixed bg-white top-0 left-0 w-screen h-screen z-50 overflow-scroll flex justify-center items-center flex-col'>
+        <div className='fixed bg-white top-0 left-0 w-screen h-screen z-50 overflow-scroll flex justify-center items-center flex-col px-4'>
             <form onSubmit={handleSubmit(onServiceSubmit)}>
                 <p className='text-gray-500'>Describe and add the service you would like to provide to people and their pets.</p>
                 <br />
@@ -47,11 +47,11 @@ const ServiceForm = (props: any) => {
                         ))}
                     </select>
                     <input placeholder={'Title'} {...register('name', { required: true })} className='input' />
-                    {errors.name && <p className={styles.inputError}>This field is required</p>}
+                    {errors.name && <p className={styles.inputError}>This field is required.</p>}
                     <textarea placeholder={'Description'} {...register('description', { required: true })} className='input' />
-                    {errors.description && <p className={styles.inputError}>This field is required</p>}
+                    {errors.description && <p className={styles.inputError}>This field is required.</p>}
                     <input placeholder={'Price'} {...register('price', { required: true })} className='input' />
-                    {errors.price && <p className={styles.inputError}>This field is required</p>}
+                    {errors.price && <p className={styles.inputError}>This field is required.</p>}
                 </div>
                 <Button priority="high">Submit</Button>
             </form>

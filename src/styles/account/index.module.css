@@ -22,12 +22,12 @@
     flex
     justify-center
     items-center
-    flex-col;
+    flex-col
+    mb-10;
 }
 
 .dataSectionFormContainer { @apply
-    rounded-sm
-    p-4;
+    rounded-sm;
 }
 
 .userImageContainer { @apply 
@@ -67,9 +67,9 @@
     appearance-none 
     border 
     rounded 
-    w-full 
+    w-full
     py-2 
-    px-3
+    pl-3
     my-3
     text-gray-700 
     leading-tight 
@@ -91,5 +91,34 @@
     gap-x-6 
     gap-y-6
     grid-cols-12
-    mb-10
+    mb-10;
+}
+
+.container { @apply
+    mx-4;
+}
+
+.titleOfSection { @apply
+    text-5xl
+    text-slate-700
+    tracking-wider;
+}
+
+.titleOfSectionContainer { @apply
+    mb-20;
+}
+
+.descriptionOfSection { @apply
+    text-2xl
+    text-slate-700;
+}
+
+.nameAndSubmitContainer { @apply
+    sm:mx-6
+    self-center;
+}
+
+.nameAndSubmitContainer > div { @apply
+    justify-center
+    sm:justify-start;
 }

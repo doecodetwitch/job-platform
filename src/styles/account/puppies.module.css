@@ -1,0 +1,14 @@
+.titleOfSection { @apply
+    text-5xl
+    text-slate-700
+    tracking-wider;
+}
+
+.titleOfSectionContainer { @apply
+    mb-2;
+}
+
+.descriptionOfSection { @apply
+    text-2xl
+    text-slate-700;
+}
