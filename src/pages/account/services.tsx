@@ -9,6 +9,8 @@ import {useState} from "react";
 import { useTranslation } from 'next-i18next'
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import nextI18nConfig from "src/../next-i18next.config.mjs";
+import AccountMenu from '@/src/components/Account/AccountMenu/AccountMenu';
+import styles from '@/src/styles/account/services.module.css'
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
     props: {
@@ -49,37 +51,42 @@ const Services: NextPage = () => {
         <>
             <div className='layout'>
                 <Header />
-
-                <h2 className='font-display text-3xl tracking-tight sm:text-4xl md:text-4xl'>{t("accountServices.title")}</h2>
-                <p>{t("accountServices.description")}</p>
-
-                {workingAccount || isLoading ? null :
-                <Button onClick={()=>handleStartProvidingServices()} priority='high'>
-                    Start providing services!
-                </Button> }
-
-                { workingAccount?.services.length === 0 ?
-                <Button onClick={()=>handleToggleServiceForm()} priority='mid'>
-                    Add your first service!
-                </Button> :
+                <AccountMenu />
+                <div className='mx-4'>
+                <div className={styles.titleOfSectionContainer}>
+                    <p className={styles.titleOfSection}>{t("accountServices.title")}</p>
+                    <p className={styles.descriptionOfSection}>{t("accountServices.description")}</p>
+                </div>
                 <div>
-                    {workingAccount?.services.map((service)=>(
-                        <div key={service.id}>
-                            {service.name}
-                        </div>
-                    ))}
+                    {workingAccount || isLoading ? null :
+                    <Button onClick={()=>handleStartProvidingServices()} priority='high'>
+                        Start providing services!
+                    </Button> }
 
-                    <Button priority='high' onClick={()=>handleToggleServiceForm()}>New service</Button>
-                </div> }
+                    { workingAccount?.services.length === 0 ?
+                    <Button onClick={()=>handleToggleServiceForm()} priority='mid'>
+                        Add your first service!
+                    </Button> :
+                    <div>
+                        {workingAccount?.services.map((service)=>(
+                            <div key={service.id}>
+                                {service.name}
+                            </div>
+                        ))}
 
-                {isServiceFormOpen ?
-                <ServiceForm
-                    handleToggleServiceForm={handleToggleServiceForm}
-                    workingAccountId={workingAccount?.id}
-                /> :
-                null }
+                        <Button priority='high' onClick={()=>handleToggleServiceForm()}>New service</Button>
+                    </div> }
+                </div>
 
-                <Footer />
+                    {isServiceFormOpen ?
+                    <ServiceForm
+                        handleToggleServiceForm={handleToggleServiceForm}
+                        workingAccountId={workingAccount?.id}
+                    /> :
+                    null }
+
+                    <Footer />
+                </div>
             </div>
         </>
     );

@@ -1,6 +1,6 @@
 .headerContainer { @apply
     relative
-    z-[100]
+    z-[50]
     sm:z-0
     h-auto
     w-auto
@@ -11,6 +11,7 @@
     xl:w-[1280px]
     space-y-0
     justify-between
+    border-b
     bg-white;
 }
 
@@ -29,6 +30,7 @@
     mx-auto
     flex-wrap
     xl:w-[1280px]
+    border-b
     bg-white;
 }
 
