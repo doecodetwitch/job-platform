@@ -85,10 +85,15 @@ const { data: session } = useSession({ required: true });
             <Header />
             <AccountMenu />
             <div className='mx-4'>
-                <div className={styles.titleOfSectionContainer}>
-                    <p className={styles.titleOfSection}>Your dog</p>
-                    <p className={styles.descriptionOfSection}>Pls love him, ok?</p>
-                </div> 
+                <div className='sm:flex justify-between'>
+                    <div className={styles.titleOfSectionContainer}>
+                        <p className={styles.titleOfSection}>Your dog</p>
+                        <p className={styles.descriptionOfSection}>Pls love him, ok?</p>
+                    </div>
+                    <div className='place-self-center'>
+                    <Button onClick={() => { handleOpenPetForm() }} priority="high">Add new pet</Button>
+                    </div>
+                </div>
             <div className={styles.container}>
                 <div className={styles.formContainer}>
                     <div>
@@ -100,12 +105,10 @@ const { data: session } = useSession({ required: true });
                                 </div>
                             ))}
                         </div>
-                        <div>
-                            <Button onClick={() => { handleOpenPetForm() }} priority="low">Add new pet</Button>
-                            <div ref={petFormRef} className="hidden fixed top-0 left-0 w-full h-full bg-white bg-opacity-50 place-items-center place-content-center">
+                            
+                            <div ref={petFormRef} className="fixed bg-white top-0 left-0 w-screen h-screen z-50 overflow-scroll flex justify-center items-center flex-col px-4 py-4">
                                 <PetForm closePetForm={handleClosePetForm} />
                             </div>
-                        </div>
                         <Footer />
                     </div>
                 </div>

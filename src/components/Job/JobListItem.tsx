@@ -12,14 +12,14 @@ const JobListItem = ({job, mode}: any) => {
 
     return (
         <>
-            <div className='bg-brand-white m-4 cursor-pointer'>
+            <div className='bg-brand-white'>
                 <div className='w-full p-4'>
                     <p className='my-4'>{job.title}</p>
                     <p className="text-xs">{job.description}</p>
                     <div className='flex items-center mt-6 justify-end'>
                         <div className='grow flex space-x-2 items-center'>
                             <Button priority='lower'>
-                               <Link href={`/jobs/${encodeURIComponent(job.id)}`}>See More</Link>
+                               <Link href={`/jobs/${encodeURIComponent(job.id)}`}>More</Link>
                             </Button>
                             {mode === 'myAccount' &&
                                 <>

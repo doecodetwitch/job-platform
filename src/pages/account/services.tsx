@@ -52,7 +52,7 @@ const Services: NextPage = () => {
             <div className='layout'>
                 <Header />
                 <AccountMenu />
-                <div className='mx-4'>
+                <div className={styles.yourServicesContainer}>
                 <div className={styles.titleOfSectionContainer}>
                     <p className={styles.titleOfSection}>{t("accountServices.title")}</p>
                     <p className={styles.descriptionOfSection}>{t("accountServices.description")}</p>
@@ -62,30 +62,28 @@ const Services: NextPage = () => {
                     <Button onClick={()=>handleStartProvidingServices()} priority='high'>
                         Start providing services!
                     </Button> }
-
                     { workingAccount?.services.length === 0 ?
                     <Button onClick={()=>handleToggleServiceForm()} priority='mid'>
                         Add your first service!
                     </Button> :
-                    <div>
-                        {workingAccount?.services.map((service)=>(
-                            <div key={service.id}>
-                                {service.name}
-                            </div>
-                        ))}
-
+                    <>
+                        <div className={styles.services}>
+                            <ul className={styles.listOfServices}>
+                                {workingAccount?.services.map((service)=>(
+                                    <li key={service.id}>{service.name}</li>
+                                ))}
+                            </ul>
+                        </div>
                         <Button priority='high' onClick={()=>handleToggleServiceForm()}>New service</Button>
-                    </div> }
+                    </>}
                 </div>
-
                     {isServiceFormOpen ?
                     <ServiceForm
                         handleToggleServiceForm={handleToggleServiceForm}
                         workingAccountId={workingAccount?.id}
                     /> :
                     null }
-
-                    <Footer />
+                <Footer />
                 </div>
             </div>
         </>

@@ -1,6 +1,6 @@
 .petFormContainer { @apply
-    min-w-[400px] 
-    bg-white p-6;
+    /* min-w-[375px]  */
+    bg-white;
 }
 
 .petFormTitle { @apply 

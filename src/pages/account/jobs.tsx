@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { trpc } from "@/src/utils/trpc";
 import axios from 'axios';
 import Header from '@/src/components/Header/Header';
-import styles from '@/src/styles/account/index.module.css'
+import styles from '@/src/styles/account/jobs.module.css'
 import Footer from '@/src/components/Footer/Footer';
 import JobForm from '@/src/components/Account/JobForm/JobForm';
 import Button from '@/src/components/Button/Button';
@@ -84,8 +84,12 @@ const { data: session } = useSession({ required: true });
         <div className='layout'>
             <Header />
             <AccountMenu />
-
-            <div className={styles.container}>
+            <div className='mx-4'>
+            <div className={styles.titleOfSectionContainer}>
+                <p className={styles.titleOfSection}>Your jobs</p>
+                <p className={styles.descriptionOfSection}>Check your jobs and do sth!</p>
+             </div>
+            <div className={styles.container2}>
                 <div className={styles.formContainer}>
                     {/* <h1>Your data</h1> */}
                     <div>
@@ -93,14 +97,17 @@ const { data: session } = useSession({ required: true });
                             {myJobs?.map((item: any) => (
                                 <JobListItem job={item} key={item.id} mode='myAccount' />
                             ))}
-                            <Button onClick={() => { handleOpenJobForm() }} priority="low">Add a new job</Button>
-                            <div ref={jobFormRef} className='hidden fixed top-0 left-0 w-full h-full bg-white bg-opacity-50 place-items-center place-content-center'>
+                            <div className='mt-4'>
+                                <Button onClick={() => { handleOpenJobForm() }} priority="low">Add a new job</Button>
+                            </div>
+                            <div ref={jobFormRef} className='fixed bg-white top-0 left-0 w-screen h-screen z-50 overflow-scroll flex justify-center items-center flex-col px-4'>
                                 <JobForm myPets={myPets} closeJobForm={handleCloseJobForm} />
                             </div>
                         </div>
                         <Footer />
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     );

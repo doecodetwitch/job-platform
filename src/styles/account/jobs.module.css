@@ -5,7 +5,7 @@
 }
 
 .titleOfSectionContainer { @apply
-    mb-2;
+    mb-8;
 }
 
 .descriptionOfSection { @apply
