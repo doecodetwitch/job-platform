@@ -12,3 +12,18 @@
     text-2xl
     text-slate-700;
 }
+
+.listOfServices {
+    color: rgb(51 65 85);
+    list-style-type: circle;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+}
+
+.yourServicesContainer { @apply
+    mx-4
+}
+
+.services { @apply
+    mx-12 my-10
+}

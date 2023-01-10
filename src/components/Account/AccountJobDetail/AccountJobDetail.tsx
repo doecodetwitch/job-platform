@@ -46,7 +46,7 @@ const AccountJobDetail = (props: any) => {
     }
 
     return (
-            <div className='min-w-[400px] bg-white p-6'>
+            <div className='fixed bg-white top-0 left-0 w-screen h-screen z-50 overflow-scroll justify-center items-center flex-col px-4'>
                 <span className='flex items-center mb-4 space-x-full'>
                     <h3 className='grow'>Edit this job</h3>
                     <Button onClick={()=>{props.closeEdit()}} priority='high'>Close</Button>
@@ -64,12 +64,12 @@ const AccountJobDetail = (props: any) => {
                         <p className='mr-2'>Enable / disable </p>
                         <Switch toggled={!jobActive} action={handleChangeJobStatus} />
                     </div>
-                    <Button priority='mid'>Confirm</Button>
                 </form>
 
-                <div className='border-t-2 mt-6 pt-4 w-full flex items-center'>
-                    <p>Delete the job</p>
-                    <Button priority='high' onClick={()=>(deleteJobMutation.mutate({id: props.job.id}))}>Delete</Button>
+                <div className='border-t-2 mt-2 pt-4 w-full flex items-center justify-between'>
+                    <Button priority='mid'>Save</Button>   
+                    <Button priority='high' onClick={()=>(deleteJobMutation.mutate({id: props.job.id}))}>Delete</
+                    Button>  
                 </div>
             </div>
     );

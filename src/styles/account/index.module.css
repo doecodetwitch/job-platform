@@ -32,7 +32,7 @@
 
 .userImageContainer { @apply 
     relative 
-    flex
+    /* sm:flex */
     items-center
     justify-center;
 }
@@ -115,10 +115,10 @@
 
 .nameAndSubmitContainer { @apply
     sm:mx-6
-    self-center;
+    self-center
+    ml-1;
 }
 
 .nameAndSubmitContainer > div { @apply
-    justify-center
-    sm:justify-start;
+    justify-start;
 }

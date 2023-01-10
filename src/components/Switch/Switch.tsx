@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 const Switch = (props: any) => {
     const [toggle , setToggle ] = useState(false);
     const toggleClass = 'transform translate-x-6';
-    const toggleBgClass = 'bg-green-500';
+    const toggleBgClass = 'bg-brand-secondaryHover';
     const notToggleBgClass = 'bg-gray-300';
 
     const _handleClick = () => {

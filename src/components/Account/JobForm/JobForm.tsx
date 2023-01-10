@@ -29,7 +29,7 @@ const JobForm = (props: any) => {
     }
 
     return (
-            <div className='min-w-[400px] bg-white p-6'>
+            <div className='bg-white p-6'>
                 <span className='flex items-center mb-4 space-x-full'>
                     <h3 className='grow'>Fill out the form to post a job!</h3>
                     <Button onClick={()=>{props.closeJobForm()}} priority='high'>Close</Button>

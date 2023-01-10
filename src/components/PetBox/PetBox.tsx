@@ -4,6 +4,7 @@ import {useSession} from "next-auth/react";
 import add_friend from "@/src/assets/add_friend.svg";
 import React from "react";
 import { useEffect, useState } from 'react';
+import { FiUserPlus } from 'react-icons/fi';
 
 const PetBox = (props: any) => {
     const { data: session } = useSession({ required: true });
@@ -93,13 +94,18 @@ const PetBox = (props: any) => {
                 <img src="https://i.pinimg.com/564x/2c/e9/31/2ce931c901ba679c2a855bfd77e6da5f.jpg" alt="pet-image" className={styles.petBoxImage} /> }
 
                 <div className={styles.rightNameContainer}>
-                    <p className={styles.petName}>{props.pet.name}</p>
+                    <div className='flex'>
+                        <p className={styles.petName}>{props.pet.name}</p>
+                        {props.mode === 'petListing' ?
+                        
+                            <div className='self-center ml-2 cursor-pointer'>
+                                <FiUserPlus onClick={()=>props.sendFriendRequestMutation.mutate({senderId: session?.user?.id, receiverId: props.pet.userId})}/>
+                            </div>
+                         :
+                        null}
+                    </div>
                     <p className={styles.petBreed}>{props.pet.breed}</p>
-                    {props.mode === 'petListing' ?
-                    <Button priority='low' onClick={()=>props.sendFriendRequestMutation.mutate({senderId: session?.user?.id, receiverId: props.pet.userId})}>
-                        <img src={add_friend.src} alt="Add" width='30' />
-                    </Button> :
-                    null}
+                    
                     <p className={isBirthday ? styles.petBirthday : styles.petCounterBirthday}>{isBirthday ? 'Happy Birthday!' : howOldIsYourDog + 'birthday in ' + days + (days == 1 ? ' day' : ' days')}</p>
                 </div>
             </div>

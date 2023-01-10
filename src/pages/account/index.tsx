@@ -90,21 +90,21 @@ const { data: session } = useSession({ required: true });
                     <div className={styles.dataSectionContainer}>
                         <div className={styles.dataSectionFormContainer}>
                             <form onSubmit={handleSubmit(onNameSubmit)}>
-                                <div className='sm:flex'>
-                                    <div className='sm:mx-6'>
+                                <div className='flex'>
+                                    <div className='mr-1 sm:mx-6'>
                                         <label htmlFor="userImage" className=''>
                                             <div className={styles.userImageContainer}>
                                                 {session?.user?.image ?
                                                     <img src={session?.user?.image} className={styles.userImage} alt="" /> : null}
                                                 <input id="userImage" className="hidden" type="file" {...register('userImage', { required: true })} />
-                                                {errors.userImage && <p className={styles.inputError}>This field is required</p>}
+                                                {errors.userImage && <p className={styles.inputError}>This field is required.</p>}
                                                 <div className={styles.userImageOverlay}><p className={styles.userImageOverlayText}>Change avatar</p></div>
                                             </div>
                                         </label>
                                     </div>
                                     <div className={styles.nameAndSubmitContainer}>
                                         <input placeholder={session?.user?.name || 'your name'} {...register('name', { required: true })} className={styles.usernameInput} />
-                                            {errors.name && <p className={styles.inputError}>This field is required</p>}
+                                            {errors.name && <p className={styles.inputError}>This field is required.</p>}
                                         <Button priority="low">Submit</Button>
                                     </div>
                                 </div>
