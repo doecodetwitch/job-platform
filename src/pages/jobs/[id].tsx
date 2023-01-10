@@ -2,30 +2,45 @@ import type { NextPage } from 'next'
 import { trpc } from "@/src/utils/trpc";
 import { useRouter } from 'next/router';
 import DataPage from '@/src/components/DataPage/DataPage';
-import {isString, isUndefined} from "is-what";
+import { isString, isUndefined } from "is-what";
+import styles from '@/src/styles/jobs/id.module.css'
+import { GoPrimitiveDot } from 'react-icons/go'
 
 const Jobs: NextPage = () => {
     const router = useRouter();
     if (isUndefined(router.query.id) || !isString(router.query.id)) {
-        return(<>
+        return (<>
             <h1>This job no longer exist.</h1>
         </>)
     }
-    const query = trpc.useQuery(['jobs.getJobById', {id: router.query.id}]);
+    const query = trpc.useQuery(['jobs.getJobById', { id: router.query.id }]);
+
+    const jobStatus = query.data?.status ? "Aktualne" : "Nieaktualne"
+    const activeDot = query.data?.status ? "col-end-5 p-1 text-green-500" : "col-end-5 p-1 text-gray-400"
 
     return (
-        <>
-            <DataPage query={query}>
-                    <p>job id: {query.data?.id }</p>
-                    <p>job title: {query.data?.title}</p>
-                    <p>description: {query.data?.description}</p>
-                    <p>status: {query.data?.status}</p>
-                    <p>price: {query.data?.price}</p>
-                    <p>contact email: {query.data?.contactEmail}</p>
-                    <p>contact number: {query.data?.contactNumber}</p>
-                    <p>nazwa pieska: {query.data?.pet.name}</p>
-            </DataPage>
-        </>
+        <DataPage query={query}>
+            <div className={styles.container}>
+                <div>
+                    <img src='https://i.pinimg.com/564x/2c/e9/31/2ce931c901ba679c2a855bfd77e6da5f.jpg' alt="piesobrazek" className={styles.petImage} />
+                    <p className={styles.dogName}>{query.data?.pet.name}</p>
+                    <p className={styles.jobTitle}>{query.data?.title}</p>
+                    <div className={styles.priceStatusContainer}>
+                        <p className={styles.jobPrice}>{query.data?.price}zł</p>
+                        <p className={styles.jobStatus}>{jobStatus} </p>
+                        <p className={activeDot}><GoPrimitiveDot /></p>
+                    </div>
+                </div>
+                <div>
+                    <h1 className={styles.descriptionTitle}>Opis:</h1>
+                    <p className={styles.jobDescription}>{query.data?.description}</p>
+                    <div className={styles.contactContainer}>
+                        <p className={styles.contact}>e-mail:</p><p className={styles.contactData}>{query.data?.contactEmail}</p>
+                        <p className={styles.contact}>tel:</p><p className={styles.contactData}>{query.data?.contactNumber}</p>
+                    </div>
+                </div>
+            </div>
+        </DataPage>
     )
 }
 

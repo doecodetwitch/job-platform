@@ -1,0 +1,47 @@
+.container {
+    @apply columns-1 justify-center p-4 m-4 md:columns-2
+}
+
+.petImage {
+    @apply max-w-full
+}
+
+.dogName {
+    @apply text-3xl my-4
+}
+
+.jobTitle {
+    @apply text-xl font-semibold mb-4
+}
+
+.priceStatusContainer {
+    @apply grid grid-cols-3 mb-5 border-y py-4
+}
+
+.jobPrice {
+    @apply text-xl font-bold text-red-500
+}
+
+.jobStatus {
+    @apply text-end col-end-4
+}
+
+.descriptionTitle {
+    @apply text-lg font-bold my-3
+}
+
+.jobDescription {
+    @apply mb-5
+}
+
+.contactContainer {
+    @apply font-bold text-center grid grid-cols-3 md:grid-cols-6
+}
+
+.contact {
+    @apply text-start
+}
+
+.contactData {
+    @apply text-start col-span-2 md:col-span-5
+}
