@@ -1,0 +1,18 @@
+.page { @apply
+    px-12
+    pt-4
+}
+
+.container { @apply
+    my-2
+    flex
+}
+
+.label { @apply
+    w-16
+}
+
+
+.addressField { @apply 
+    w-96
+}

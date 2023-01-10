@@ -9,6 +9,9 @@ const AccountMenu = () => {
                 <Link href='/account'>Profile</Link>
             </div>
             <div className={styles.accountMenuPosition}>
+                <Link href='/account/address'>Address</Link>
+            </div>
+            <div className={styles.accountMenuPosition}>
                 <Link href='/account/services'>Services</Link>
             </div>
             <div className={styles.accountMenuPosition}>

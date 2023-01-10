@@ -61,6 +61,7 @@ model User {
     receivedFriendRequests FriendRequest[] @relation("receiverRelation")
     friends                User[]          @relation("friends")
     friendsRelation        User[]          @relation("friends")
+    userAddress            UserAddress?
     workingUserId          String?         @unique
     workingUser            WorkingUser?
 }
@@ -110,6 +111,17 @@ model Pet {
     jobs    Job[]
 
     @@unique([id])
+}
+
+model UserAddress {
+    id          String      @id @default(cuid())
+    user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId      String      @unique
+    country     String
+    city        String
+    postalCode  String
+    street      String
+    houseNumber String
 }
 
 model PetType {
