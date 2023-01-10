@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import DataPage from '@/src/components/DataPage/DataPage';
 import { isString, isUndefined } from "is-what";
 import styles from '@/src/styles/jobs/id.module.css'
+import { GoPrimitiveDot } from 'react-icons/go'
 
 const Jobs: NextPage = () => {
     const router = useRouter();
@@ -15,6 +16,7 @@ const Jobs: NextPage = () => {
     const query = trpc.useQuery(['jobs.getJobById', { id: router.query.id }]);
 
     const jobStatus = query.data?.status ? "Aktualne" : "Nieaktualne"
+    const activeDot = query.data?.status ? "col-end-5 p-1 text-green-500" : "col-end-5 p-1 text-gray-400"
 
     return (
         <DataPage query={query}>
@@ -25,7 +27,8 @@ const Jobs: NextPage = () => {
                     <p className={styles.jobTitle}>{query.data?.title}</p>
                     <div className={styles.priceStatusContainer}>
                         <p className={styles.jobPrice}>{query.data?.price}zł</p>
-                        <p className={styles.jobStatus}>{jobStatus}</p>
+                        <p className={styles.jobStatus}>{jobStatus} </p>
+                        <p className={activeDot}><GoPrimitiveDot /></p>
                     </div>
                 </div>
                 <div className={styles.rightContainer}>

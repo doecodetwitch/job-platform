@@ -1,5 +1,5 @@
 .container {
-    @apply columns-1 justify-center p-4 m-4
+    @apply columns-1 justify-center p-4 m-4 md:columns-2
 }
 
 .petImage {
@@ -15,7 +15,7 @@
 }
 
 .priceStatusContainer {
-    @apply grid grid-cols-2 mb-5 border-y py-4
+    @apply grid grid-cols-3 mb-5 border-y py-4
 }
 
 .jobPrice {
@@ -23,7 +23,7 @@
 }
 
 .jobStatus {
-    @apply text-end
+    @apply text-end col-end-4
 }
 
 .descriptionTitle {
@@ -35,13 +35,13 @@
 }
 
 .contactContainer {
-    @apply font-bold text-center grid grid-cols-3
+    @apply font-bold text-center grid grid-cols-3 md:grid-cols-6
 }
 
 .contact {
-    @apply text-start col-span-1
+    @apply text-start
 }
 
 .contactData {
-    @apply text-start col-span-2
+    @apply text-start col-span-2 md:col-span-5
 }
