@@ -1,0 +1,62 @@
+.navContainerActive { @apply
+    grid
+    w-full
+    sm:flex
+    sm:items-center
+    z-10
+    sm:w-auto;
+}
+
+.navContainer { @apply
+    hidden
+    w-full
+    sm:flex
+    sm:items-center
+    sm:w-auto;
+}
+
+.accountAndLoginContainer { @apply
+    hidden
+    w-full
+    mt-2
+    sm:mt-0
+    sm:flex
+    sm:items-center
+    sm:w-auto
+    sm:ml-auto
+    sm:mr-4
+}
+
+.menuContainer { @apply
+    rounded-lg
+    z-10
+    py-2
+    sm:py-1
+    px-2
+    text-xl
+    sm:text-sm
+    text-slate-700
+    hover:bg-slate-100
+    hover:text-slate-900
+    mx-2;
+}
+
+.accountContainer { @apply
+    mb-8
+    sm:my-auto;
+}
+
+.logOutButton { @apply
+    mx-auto;
+}
+
+.logInButton { @apply
+    mx-auto
+    sm:my-auto;
+}
+
+.logButtonMobile { @apply
+    mx-auto
+    mt-4;
+}
+

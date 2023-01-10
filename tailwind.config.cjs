@@ -6,8 +6,10 @@ module.exports = {
       colors: {
         brand: {
           primary: '#F8AD9D',
-          secondary: '#FFDAB9',
+          secondary: '#B79915',
+          secondaryHover: '#A48A13',
           tertiary: '#F08080',
+          tertiaryHover: '#EE6D6D',
           black: '#252422',
           white: '#edf2f4'
         },

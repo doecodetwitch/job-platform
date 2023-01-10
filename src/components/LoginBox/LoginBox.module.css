@@ -1,6 +1,4 @@
 .loginBoxWraper { @apply
-   border-solid
-   border-2
    border-slate-200
    rounded-xl
    drop-shadow-2xl

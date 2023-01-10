@@ -1,0 +1,19 @@
+.accountMenu{ @apply
+    flex
+    overflow-x-scroll
+    mx-4
+    mb-2
+    pb-3
+    pt-4;
+}
+
+.accountMenuPosition{ @apply
+    block
+    mx-3
+    text-slate-700
+    hover:bg-slate-100
+    hover:text-slate-900
+    text-lg
+    rounded-lg
+    p-2;
+}

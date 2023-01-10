@@ -62,7 +62,32 @@ model User {
     friends                User[]          @relation("friends")
     friendsRelation        User[]          @relation("friends")
     userAddress            UserAddress?
+    workingUserId          String?         @unique
+    workingUser            WorkingUser?
+}
 
+model WorkingUser {
+    id                     String          @id @default(cuid())
+    userId                 String          @unique
+    user                   User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+    services               Service[]
+
+    @@unique([id])
+}
+
+model Service {
+    id                     String          @id @default(cuid())
+    type                   Int
+    name                   String
+    description            String          @db.VarChar(10000)
+    price                  Float
+    workingUserId          String
+    workingUser            WorkingUser     @relation(fields: [workingUserId], references: [id], onDelete: Cascade)
+}
+
+model ServiceType {
+    id   Int    @id @default(autoincrement())
+    type String
 }
 
 model VerificationToken {

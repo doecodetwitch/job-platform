@@ -4,6 +4,7 @@ import FriendRequestDetail from "@/src/components/Account/FriendRequestDetail/Fr
 import Header from "@/src/components/Header/Header";
 import Footer from "@/src/components/Footer/Footer";
 import Button from "@/src/components/Button/Button";
+import AccountMenu from '@/src/components/Account/AccountMenu/AccountMenu';
 
 const Friends: NextPage = () => {
     const { data: userDetails } = trpc.useQuery(['account.getUserDetails']);
@@ -12,6 +13,7 @@ const Friends: NextPage = () => {
         <>
             <div className='layout'>
                 <Header />
+                <AccountMenu />
 
                 <h2 className='font-display text-3xl tracking-tight sm:text-4xl md:text-5xl'>Yo, these people want to be your friends!</h2>
                 {userDetails?.receivedFriendRequests.map((request)=>(
