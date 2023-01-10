@@ -23,7 +23,6 @@ const AddressPage: NextPage = () => {
         const country = location?.properties?.country
 
         if (code && country) {
-
             setCountryCode(code);
             setCountry(country);
         }
@@ -37,7 +36,6 @@ const AddressPage: NextPage = () => {
         const city = location?.properties?.city
 
         if (city) {
-
             setCity(city);
         }
         else {
@@ -49,7 +47,6 @@ const AddressPage: NextPage = () => {
         const street = location?.properties?.street
 
         if (street) {
-
             setStreet(street);
         }
         else {
@@ -59,9 +56,7 @@ const AddressPage: NextPage = () => {
 
     const onHouseNumberSelectedHandler = (location: any) => {
         const houseNumber = location?.properties?.housenumber
-        console.log(location);
         if (houseNumber) {
-
             setHouseNumber(houseNumber);
         }
         else {
@@ -70,11 +65,9 @@ const AddressPage: NextPage = () => {
     }
 
     const onPostalCodeSelectedHandler = (location: any) => {
-        console.log(location);
         const postalCode = location?.properties?.postcode
 
         if (postalCode) {
-
             setPostalCode(postalCode);
         }
         else {
@@ -95,7 +88,6 @@ const AddressPage: NextPage = () => {
     }
 
     const onPostalCodePopulateInputHandler = (location: any) => {
-        console.log(location);
         return location?.properties?.postcode
     }
 
@@ -181,7 +173,6 @@ const AddressPage: NextPage = () => {
     }
 
     const postprocessCity = (data: any) => {
-        console.log(data);
         return data?.properties?.city
     }
 
