@@ -21,7 +21,7 @@ const Jobs: NextPage = () => {
     return (
         <DataPage query={query}>
             <div className={styles.container}>
-                <div className={styles.leftContainer}>
+                <div>
                     <img src='https://i.pinimg.com/564x/2c/e9/31/2ce931c901ba679c2a855bfd77e6da5f.jpg' alt="piesobrazek" className={styles.petImage} />
                     <p className={styles.dogName}>{query.data?.pet.name}</p>
                     <p className={styles.jobTitle}>{query.data?.title}</p>
@@ -31,7 +31,7 @@ const Jobs: NextPage = () => {
                         <p className={activeDot}><GoPrimitiveDot /></p>
                     </div>
                 </div>
-                <div className={styles.rightContainer}>
+                <div>
                     <h1 className={styles.descriptionTitle}>Opis:</h1>
                     <p className={styles.jobDescription}>{query.data?.description}</p>
                     <div className={styles.contactContainer}>
