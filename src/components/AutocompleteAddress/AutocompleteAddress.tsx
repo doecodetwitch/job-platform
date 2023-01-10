@@ -20,8 +20,8 @@ export interface AutocompleteAddressProps {
 const AutocompleteAddress = (props: AutocompleteAddressProps) => {
 
     const apiKey = useContext(AutocompleteAddressCtx)
-    let rootElementRef = useRef<HTMLDivElement>(null);
-    let autoCompleteRef = useRef<GeocoderAutocomplete>();
+    const rootElementRef = useRef<HTMLDivElement>(null);
+    const autoCompleteRef = useRef<GeocoderAutocomplete>();
     let isInitialized = false;
     let defaultSuggestionCount: 5;
     let defaultPlaceholder: "Please enter an address";
